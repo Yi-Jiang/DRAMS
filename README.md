@@ -7,7 +7,7 @@ A tool to Detect and Re-Align Mixed-up Samples based on multi-omics data.
 * Users can set omics priority depending on which omics type they trust more.
 
 ## System requirement
-DRAMS can be run under linux environment with Python3 installed. No installation required.
+DRAMS can be run under Linux environment with Python3 installed. No installation required.
 
 ## Get started
 To run the sample ID realignment procedure:
