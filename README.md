@@ -22,8 +22,8 @@ python3 run_DRAMS.py -a relatedness.highlyRelate.filter -b omics_priority -c sam
 ### Call genotypes
 We recomment to use the same pipeline to call genotypes for sequencing data of any types, such as DNA sequencing, RNA sequencing, ATAC-seq (Assay for Transposase-Accessible Chromatin using sequencing). Here are recommended scripts to call genotypes:
 ```bash
-bash call_genotypes.step1.sh example  # Map reads to reference genome and Base Quality Score Recalibration (BQSR)
-bash call_genotypes.step2.sh  # Call genotypes by GATK HaplotypeCaller
+bash Utilities/call_genotypes.step1.sh example  # Map reads to reference genome and Base Quality Score Recalibration (BQSR)
+bash Utilities/call_genotypes.step2.sh  # Call genotypes by GATK HaplotypeCaller
 ```
 
 ### Check sample contamination
@@ -43,7 +43,7 @@ gcta64 --bfile example --autosome --maf 0.01 --make-grm --out example  # Estimat
 ### Extract highly related sample pairs
 The genetic relatedness scores were in bimodal distribution. We provided a script to extract highly related sample pairs based on the distribution. The results include a table of all highly related sample pairs, a density plot of the sample relatedness scores, and a summary table for the highly related sample pairs for each omics type. (Also a formated input for Cytoscape?)
 ```base
-python3 extract_highly_related_pairs.py --input_prefix=example --output_prefix=example --threshold=0.65 --min_loci=400
+python3 Utilities/extract_highly_related_pairs.py --input_prefix=example --output_prefix=example --threshold=0.65 --min_loci=400
 ```
 
 ### Guidance on visualize highly related sample pairs through Cytoscape
