@@ -26,7 +26,7 @@ bash call_genotypes.step1.sh example  # Map reads to reference genome and Base Q
 bash call_genotypes.step2.sh  # Call genotypes by GATK HaplotypeCaller
 ```
 
-### Check sample contaminatio
+### Check sample contamination
 
 
 ### Infer genetic sex
