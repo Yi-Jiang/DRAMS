@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from struct import unpack, calcsize
+import matplotlib.pyplot as plt
 import sys, re, getopt, gzip
 
 def usage():
@@ -167,34 +168,43 @@ def plot_correlogram(df,figsize=(20,20)):
                 ax[i,j].set_ylim((df[y].min(),df[y].max()))
                 ax[i,j].set_xlim((df[x].min(),df[x].max()))
 
-def plot_cor_distribution(df,figsize=(20,20)):
+def plot_cor_distribution(d,binsize=0.1):
     """ 
     Create an histogram for distribution of sample relatedness scores
     """
-    
+    f = plt.figure()
+    plt.hist(d['off'], bins=binsize)
+    plt.title("Histogram of genetic relatedness scores")
+    plt.show()
+    f.savefig("relatedness.hist.pdf")
 
-def find_threshold(relatedness,minloci=min_loci):
+def find_threshold(d,minloci=min_loci):
     """
     Extract highly related sample pairs based on the distribution of sample relatedness
     """
     
 
-def extract_relate_pairs(relatedness,minloci=min_loci):
+def extract_relate_pairs(d,minloci=min_loci):
     """
     Extract highly related sample pairs based on the distribution of sample relatedness
     """
     
 
-def summary_relate_pairs(relatedness):
+def summary_relate_pairs(d):
     """
     Generate a summary table for highly related sample pairs
     """
 
-d = ReadGRMBin("merge.braingvex-1000g")
-d.keys()
-# dict_keys(['diag', 'off', 'id', 'id_off', 'id_diag', 'N'])
+if __name__ == "__main__":
+    d = ReadGRMBin(input_prefix)
+    # d.keys()  # OUTPUT: dict_keys(['diag', 'off', 'id', 'id_off', 'id_diag', 'N'])
+    d['diag'] = np.ndarray.tolist(d['diag'])
+    d['off'] = np.ndarray.tolist(d['off'])
 
-find_threshold(d['off'])
+
+
+
+    find_threshold(d['off'])
 
 
 
