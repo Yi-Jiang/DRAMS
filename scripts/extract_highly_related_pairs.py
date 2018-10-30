@@ -1,5 +1,3 @@
-import numpy as np
-
 ## To extract highly related sample pairs from GCTA results.
 ## Yi Jiang, October 2018
 
