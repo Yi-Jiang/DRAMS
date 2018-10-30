@@ -1,21 +1,31 @@
 import numpy as np
+
+## To extract highly related sample pairs from GCTA results.
+## Yi Jiang, October 2018
+
+## Import modules
 import pandas as pd
 from struct import unpack, calcsize
 import matplotlib.pyplot as plt
-import sys, re, getopt, gzip
+import sys, getopt
 
+## Help page
 def usage():
     print("")
     print("Usage: python %s --option=<argument>" %sys.argv[0])
     print("  --input_prefix=<STRING>    prefix of input file")
     print("  --output_prefix=<STRING>   prefix of output file")
     print("  --threshold=<FLOAT>        Threshold of genetic relatedness score to extract")
-    print("                             highly related pairs. The threshold will be set")
-    print("                             automatically if not set")
-    print("  --min_loci=<INT>           Minimum number of overlapped loci required to")
-    print("                             estimate sample relatedness scores [400]")
+    print("                             highly related pairs [0.65]")
+    #print("  --min_loci=<INT>           Minimum number of overlapped loci required to")
+    #print("                             estimate sample relatedness scores [400]")
     print("  -h/--help                  Show this information")
 
+## default options
+min_loci = 400
+threshold = 0.65
+
+## deal with the options
 try:
     opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "input_prefix=", "output_prefix=", "threshold=", "min_loci=", ] )
 except getopt.GetoptError:
@@ -23,10 +33,6 @@ except getopt.GetoptError:
     usage()
     sys.exit(2)
 
-## default options
-min_loci = 400
-
-## deal with the options
 for opt, val in opts:
     if opt in ( "-h", "--help" ):
         usage()
@@ -117,7 +123,7 @@ def ReadGRMBin(prefix, AllN = False):
             if i == j:
                 ids_diag[i] = str(ids_vec[i])
             else:
-                ids_off[ticker] = str(ids_vec[i]) + '_' + str(ids_vec[j])
+                ids_off[ticker] = str(ids_vec[i]) + '::' + str(ids_vec[j])
                 ticker += 1
     ## Read relatedness values
     grm = np.fromfile(BinFileName, dtype = dt)
@@ -133,79 +139,76 @@ def ReadGRMBin(prefix, AllN = False):
     out = {'diag': grm[i], 'off': np.delete(grm, i), 'id': ids, 'id_off': ids_off, 'id_diag': ids_diag, 'N': N}
     return(out)
 
-def plot_correlogram(df,figsize=(20,20)):
-    """ 
-    Create an n x n matrix of scatter plots for every
-    combination of numeric columns in a pandas dataframe
-
-    Credit: Corey Chivers (cjbayesian)
-    https://github.com/cjbayesian
-    Taken from:
-    https://gist.github.com/cjbayesian/f0f127cc57f26d968f10
-    """
-    cols = list(df.columns[df.dtypes=='float64'])
-    n = len(cols)
-    fig, ax = plt.subplots(n,n,figsize=figsize)
-    for i,y in enumerate(cols):
-        for j,x in enumerate(cols):
-            if i != n-1:
-                ax[i,j].xaxis.set_ticklabels([])
-            if j != 0:
-                    ax[i,j].yaxis.set_ticklabels([])
-            if i != j:
-                try:
-                    tmp = df[[x,y]].copy()
-                    tmp.dropna(inplace=True)
-                    ax[i,j].plot(tmp[x].values,tmp[y].values,'.',markersize=0.5,alpha=0.5,color='black')
-                except:
-                    pass
-            else:
-                midx = df[x].min() + (df[x].max() - df[x].min())/2.0
-                midy = df[y].min() + (df[y].max() - df[y].min())/2.0
-                ax[i,j].text(midx, midy, y.replace(' ','\n'),
-                             horizontalalignment='center',
-                             verticalalignment='center')
-                ax[i,j].set_ylim((df[y].min(),df[y].max()))
-                ax[i,j].set_xlim((df[x].min(),df[x].max()))
-
-def plot_cor_distribution(d,binsize=0.1):
+def plot_cor_distribution(d, output_prefix=output_prefix):
     """ 
     Create an histogram for distribution of sample relatedness scores
     """
-    f = plt.figure()
-    plt.hist(d['off'], bins=binsize)
-    plt.title("Histogram of genetic relatedness scores")
-    plt.show()
-    f.savefig("relatedness.hist.pdf")
+    for k in d
+        plt.hist(list(d[k][:,2]), bins='auto')
+        plt.yscale('log')
+        plt.title("Histogram of genetic relatedness scores")
+        plt.savefig("%s.%s.relatedness.hist.pdf"%(output_prefix,k))
 
-def find_threshold(d,minloci=min_loci):
+def extract_relate_pairs(d, t=threshold):
     """
     Extract highly related sample pairs based on the distribution of sample relatedness
+    relatePairs = { Omics1::Omics2 -> [ [SampleID1, SampleID2, Relatedness], ... ]}
     """
-    
+    relatePairs = dict()
+    for p in d:
+        if d[p]>t:
+            s = p.split("::")
+            s1 = s[0].split("|")
+            s2 = s[1].split("|")
+            if len(s1)!=2:
+                print("Warning: Sample ID \"%s\" is not formated like \"OmicsType|SampleID\". This sample will be ignored."%s[0])
+                continue
+            if len(s2)!=2:
+                print("Warning: Sample ID \"%s\" is not formated like \"OmicsType|SampleID\". This sample will be ignored."%s[1])
+                continue
+            k = "%s::%s"%(s1[0],s2[0])
+            if k not in relatePairs:
+                relatePairs[k] = []
+            relatePairs[k].append([ s1[1], s2[1], d[p] ])
+    for k in relatePairs:
+        relatePairs[k] = np.array(relatePairs[k])
+    return relatePairs
 
-def extract_relate_pairs(d,minloci=min_loci):
+def output_pairs(d, output_prefix=output_prefix):
     """
-    Extract highly related sample pairs based on the distribution of sample relatedness
+    Write highly related pairs and summary into files
     """
-    
-
-def summary_relate_pairs(d):
-    """
-    Generate a summary table for highly related sample pairs
-    """
+    f1 = open("%s.highlyrelatedpairs.txt"%output_prefix, "w")
+    f2 = open("%s.highlyrelatedpairs.summary.txt"%output_prefix, "w")
+    f1.write("Omics1\tSampleID1\tOmics2\tSampleID2\tRelatedness\tMatch\n")
+    f2.write("Omics1\tOmics2\t#matchedPair\t#mismatchedPair\n")
+    for k in d:
+        nMatch = 0
+        nMismatch = 0
+        omics1,omics2 = k.split("::")
+        for p in d[k]:
+            if p[0]==p[1]:
+                m = "Y"
+                nMatch += 1
+            else:
+                m="N"
+                nMismatch += 1
+            f1.write("%s\t%s\t%s\t%s\t%s\t%s\n"%(omics1,p[0],omics2,p[1],p[2],m))
+        f2.write("%s\t%s\t%s\t%s\n"%(omics1,omics2,nMatch,nMismatch))
+    f1.close()
+    f2.close()
 
 if __name__ == "__main__":
-    d = ReadGRMBin(input_prefix)
-    # d.keys()  # OUTPUT: dict_keys(['diag', 'off', 'id', 'id_off', 'id_diag', 'N'])
-    d['diag'] = np.ndarray.tolist(d['diag'])
-    d['off'] = np.ndarray.tolist(d['off'])
-
-
-
-
-    find_threshold(d['off'])
-
-
-
-
+    grmres = ReadGRMBin(input_prefix)
+    grmres['diag'] = np.ndarray.tolist(grmres['diag'])
+    grmres['off'] = np.ndarray.tolist(grmres['off'])
+    relatedness = dict(zip(grmres['id_off'], grmres['off']))
+    
+    # Extract highly related sample pairs
+    relatePairs = extract_relate_pairs(relatedness, threshold)
+    
+    # Plot distribution of sample relatedness scores
+    plot_cor_distribution(relatePairs)
+    
+    # Write highly related pairs and summary into files
+    output_pairs(relatePairs)

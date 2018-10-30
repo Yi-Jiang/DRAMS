@@ -34,6 +34,7 @@ bash scripts/call_genotypes.step2.sh  # Call genotypes by GATK HaplotypeCaller
 
 ### Estimate genetic relatedness scores
 Genetic relatedness scores among all samples in all omics types were estimated by GCTA.
+Be noted that sample ID should be formated like this: "OmicsType|SampleID".
 ```bash
 plink --vcf exampleID.vcf --make-bed --out exampleID  # Convert VCF file to PLINK file (PLINK 1.9)
 plink --bfile exampleID1 --bmerge exampleID2.bed exampleID2.bim exampleID2.fam --out exampleID.merge  # Merge input files. This step may be run several times if you have multiple input PLINK files.
@@ -42,7 +43,7 @@ gcta64 --bfile exampleID --autosome --maf 0.01 --make-grm --out exampleID  # Est
 
 ### Extract highly related sample pairs
 The genetic relatedness scores were in bimodal distribution. We provided a script to extract highly related sample pairs based on the distribution. The results include a table of all highly related sample pairs, a density plot of the sample relatedness scores, and a summary table for the highly related sample pairs for each omics type. (Also a formated input for Cytoscape?)
-```base
+```bash
 python3 scripts/extract_highly_related_pairs.py --input_prefix=exampleID --output_prefix=exampleID --threshold=0.65 --min_loci=400
 ```
 
