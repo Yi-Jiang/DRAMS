@@ -19,7 +19,14 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 ```
 
 ## Results
-
+DRAMS generate a table indicating the original and new sample ID for each sample. Here is the meaning of each column:
+1. OmicsType
+1. OriginalID
+1. TrueID
+1. SwitchedOrNot
+1. GeneticSex
+1. NominalSex_NewID
+1. SexMatchedOrNot
 
 ## Data preparation
 ### Call genotypes
@@ -30,7 +37,15 @@ bash scripts/call_genotypes.step2.sh  # Call genotypes by GATK HaplotypeCaller
 ```
 
 ### Check sample contamination
-
+We recommend to check sample contamination and remove contaminated samples before run DRAMS. There are two options to check sample contamination. VerifyBamID (https://genome.sph.umich.edu/wiki/VerifyBamID) can be used based on BAM files for sequencing data. Another option is quite straightforward. We provided an AWK script to check sample contamination based on heterozygous rate. The two options have large consistency in our test data.
+```bash
+# Option1 (VerifyBamID):
+verifyBamID --vcf exampleID.vcf --bam exampleID.bam --out check.exampleID --verbose --ignoreRG
+# Option2 (Heterozygous rate):
+ls exampleID*.vcf|while read file; do 
+    awk 'BEGIN{FS="\t";OFS="\t"}$1!~/^#/{split($9,a,":");for(i in a){if(a[i]=="GQ") GQi=i;if(a[i]=="DP") DPi=i};split($10,a,":");if(a[GQi]<10||a[DPi]<3||a[DPi]>60) next;if($10~/^0\/0/){hom0++}else if($10~/^0\/1/){het++}else if($10~/^1\/1/){hom1++}}END{print "'$file'",hom0,het,hom1,het/(hom0+het+hom1)}' $file
+done > heterozygous_rate.txt  # Calculate heterozygous rate for variants with GQ>=10 and 3<=DP<=60.
+```
 
 ### Infer genetic sex
 ```bash
