@@ -15,7 +15,7 @@ A tool to Detect and Re-Align Mixed-up Samples based on multi-omics data.
 ## Get started
 To run the sample ID realignment procedure:
 ```bash
-python3 run_DRAMS.py -a relatedness.highlyRelate.filter -b omics_priority -c samplelist --coef="0,4.41,8.94,0.19" --prefix=relatedness.highlyRelate
+python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=data/omics_priority --nsex=data/samplelist.nominalSex --gsex=data/samplelist.snpSex --output=data/res
 ```
 
 ## Results
