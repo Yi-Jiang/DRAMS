@@ -1,3 +1,6 @@
+## Call genotypes by GATK HaplotypeCaller
+## Yi Jiang, October 2018
+
 ## List all input BAM files here
 inputBAM="-I example1.realigned.recal.bam -I example2.realigned.recal.bam -I example3.realigned.recal.bam"
 

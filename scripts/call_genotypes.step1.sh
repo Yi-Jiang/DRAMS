@@ -1,3 +1,6 @@
+## Map reads to reference genome, mark duplicates, BQSR
+## Yi Jiang, October 2018
+
 ## Read sample name
 sample=$1
 

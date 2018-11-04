@@ -6,8 +6,11 @@ A tool to Detect and Re-Align Mixed-up Samples based on multi-omics data.
 * Sex information is not necessary, but it’s better to have this information.
 * Users can set omics priority depending on which omics type they trust more.
 
-## System requirement
-DRAMS can be run under Linux environment with Python3 installed.
+## Software requirement
+* Linux operating system
+* Python 3.x
+* PLINK 1.9
+* GCTA
 
 ## Get started
 To run the sample ID realignment procedure:
@@ -30,13 +33,16 @@ bash scripts/call_genotypes.step2.sh  # Call genotypes by GATK HaplotypeCaller
 
 
 ### Infer genetic sex
-
+```bash
+plink --vcf exampleID.vcf --make-bed --out exampleID  # Convert VCF file to PLINK file (PLINK 1.9)
+plink --bfile exampleID --split-x hg19 --make-bed --out exampleID  # remove X chromosome pseudo-autosomal region
+plink --bfile exampleID --check-sex ycount 0.2 0.8 --out exampleID  # sexcheck (Use default 0.2/0.8 F-statistic thresholds temporarily. As the PLINK website noted, the threshold should be determined by eyeballing the distribution of F-estimates)
+```
 
 ### Estimate genetic relatedness scores
 Genetic relatedness scores among all samples in all omics types were estimated by GCTA.
 Be noted that sample ID should be formated like this: "OmicsType|SampleID".
 ```bash
-plink --vcf exampleID.vcf --make-bed --out exampleID  # Convert VCF file to PLINK file (PLINK 1.9)
 plink --bfile exampleID1 --bmerge exampleID2.bed exampleID2.bim exampleID2.fam --out exampleID.merge  # Merge input files. This step may be run several times if you have multiple input PLINK files.
 gcta64 --bfile exampleID --autosome --maf 0.01 --make-grm --out exampleID  # Estimate genetic relatedness by GCTA
 ```

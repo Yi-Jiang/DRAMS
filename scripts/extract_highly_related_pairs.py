@@ -3,6 +3,7 @@
 
 ## Import modules
 import pandas as pd
+import numpy as np
 from struct import unpack, calcsize
 import matplotlib.pyplot as plt
 import sys, getopt
@@ -11,19 +12,19 @@ import sys, getopt
 def usage():
     print("")
     print("Usage: python %s --option=<argument>" %sys.argv[0])
-    print("  --input_prefix=<STRING>    prefix of input file")
-    print("  --output_prefix=<STRING>   prefix of output file")
+    print("  --input_prefix=<STRING>    Prefix of input file")
+    print("  --output_prefix=<STRING>   Prefix of output file")
     print("  --threshold=<FLOAT>        Threshold of genetic relatedness score to extract")
     print("                             highly related pairs [0.65]")
     #print("  --min_loci=<INT>           Minimum number of overlapped loci required to")
     #print("                             estimate sample relatedness scores [400]")
     print("  -h/--help                  Show this information")
 
-## default options
+## Default options
 min_loci = 400
 threshold = 0.65
 
-## deal with the options
+## Deal with the options
 try:
     opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "input_prefix=", "output_prefix=", "threshold=", "min_loci=", ] )
 except getopt.GetoptError:
@@ -45,7 +46,7 @@ for opt, val in opts:
         if opt in ( "--min_loci", ):
             min_loci = int(val)
 
-## required options
+## Required options
 try: input_prefix, output_prefix
 except:
     print("\nMissing options!")
@@ -141,11 +142,37 @@ def plot_cor_distribution(d, output_prefix=output_prefix):
     """ 
     Create an histogram for distribution of sample relatedness scores
     """
-    for k in d
-        plt.hist(list(d[k][:,2]), bins='auto')
+    for k in d:
+        plt.hist(list(map(float, d[k][:,2])), bins="auto", color='skyblue', ec='skyblue')
         plt.yscale('log')
-        plt.title("Histogram of genetic relatedness scores")
-        plt.savefig("%s.%s.relatedness.hist.pdf"%(output_prefix,k))
+        plt.title("Genetic relatedness scores (%s)"%(k.replace("::","-")))
+        plt.savefig("%s.%s.relatedness.hist.pdf"%(output_prefix,k.replace("::","-")))
+
+def format_pairs(d):
+    """
+    Format sample pairs
+    dd = { Omics1::Omics2 -> [ [SampleID1, SampleID2, Relatedness], ... ]}
+    """
+    dd = dict()
+    for p in d:
+        s = p.split("::")
+        s1 = s[0].split("|")
+        s2 = s[1].split("|")
+        if len(s1)!=2:
+            print("Warning: Sample ID \"%s\" is not formated like \"OmicsType|SampleID\". This sample will be ignored."%s[0])
+            continue
+        if len(s2)!=2:
+            print("Warning: Sample ID \"%s\" is not formated like \"OmicsType|SampleID\". This sample will be ignored."%s[1])
+            continue
+        if s1[0]==s2[0]:
+            continue
+        k = "%s::%s"%(s1[0],s2[0])
+        if k not in dd:
+            dd[k] = []
+        dd[k].append([ s1[1], s2[1], d[p] ])
+    for k in dd:
+        dd[k] = np.array(dd[k])
+    return dd
 
 def extract_relate_pairs(d, t=threshold):
     """
@@ -153,21 +180,12 @@ def extract_relate_pairs(d, t=threshold):
     relatePairs = { Omics1::Omics2 -> [ [SampleID1, SampleID2, Relatedness], ... ]}
     """
     relatePairs = dict()
-    for p in d:
-        if d[p]>t:
-            s = p.split("::")
-            s1 = s[0].split("|")
-            s2 = s[1].split("|")
-            if len(s1)!=2:
-                print("Warning: Sample ID \"%s\" is not formated like \"OmicsType|SampleID\". This sample will be ignored."%s[0])
-                continue
-            if len(s2)!=2:
-                print("Warning: Sample ID \"%s\" is not formated like \"OmicsType|SampleID\". This sample will be ignored."%s[1])
-                continue
-            k = "%s::%s"%(s1[0],s2[0])
-            if k not in relatePairs:
-                relatePairs[k] = []
-            relatePairs[k].append([ s1[1], s2[1], d[p] ])
+    for k in d:
+        if k not in relatePairs:
+            relatePairs[k] = []
+        for p in d[k]:
+            if float(p[2])>t:
+                relatePairs[k].append(p)
     for k in relatePairs:
         relatePairs[k] = np.array(relatePairs[k])
     return relatePairs
@@ -178,8 +196,8 @@ def output_pairs(d, output_prefix=output_prefix):
     """
     f1 = open("%s.highlyrelatedpairs.txt"%output_prefix, "w")
     f2 = open("%s.highlyrelatedpairs.summary.txt"%output_prefix, "w")
-    f1.write("Omics1\tSampleID1\tOmics2\tSampleID2\tRelatedness\tMatch\n")
-    f2.write("Omics1\tOmics2\t#matchedPair\t#mismatchedPair\n")
+    f1.write("OmicsType1\tSampleID1\tOmicsType2\tSampleID2\tRelatedness\tMatch\n")
+    f2.write("OmicsType1\tOmicsType2\t#matchedPair\t#mismatchedPair\n")
     for k in d:
         nMatch = 0
         nMismatch = 0
@@ -197,16 +215,19 @@ def output_pairs(d, output_prefix=output_prefix):
     f2.close()
 
 if __name__ == "__main__":
+    # Read GCTA results
     grmres = ReadGRMBin(input_prefix)
+    
+    # Format results
     grmres['diag'] = np.ndarray.tolist(grmres['diag'])
     grmres['off'] = np.ndarray.tolist(grmres['off'])
-    relatedness = dict(zip(grmres['id_off'], grmres['off']))
+    relatedness = format_pairs(dict(zip(grmres['id_off'], grmres['off'])))
+    
+    # Plot distribution of sample relatedness scores
+    plot_cor_distribution(relatedness)
     
     # Extract highly related sample pairs
     relatePairs = extract_relate_pairs(relatedness, threshold)
-    
-    # Plot distribution of sample relatedness scores
-    plot_cor_distribution(relatePairs)
     
     # Write highly related pairs and summary into files
     output_pairs(relatePairs)
