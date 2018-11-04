@@ -38,6 +38,7 @@ bash scripts/call_genotypes.step2.sh  # Call genotypes by GATK HaplotypeCaller
 
 ### Check sample contamination
 We recommend to check sample contamination and remove contaminated samples before run DRAMS. There are two options to check sample contamination. VerifyBamID (https://genome.sph.umich.edu/wiki/VerifyBamID) can be used based on BAM files for sequencing data. Another option is quite straightforward. We provided an AWK script to check sample contamination based on heterozygous rate. The two options have large consistency in our test data.
+Here are the scripts for the two options:
 ```bash
 # Option1 (VerifyBamID):
 verifyBamID --vcf exampleID.vcf --bam exampleID.bam --out check.exampleID --verbose --ignoreRG
