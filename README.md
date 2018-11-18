@@ -19,14 +19,15 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 ```
 
 ## Results
-DRAMS generate a table indicating the original and new sample ID for each sample. Here is the meaning of each column:
-1. OmicsType
-1. OriginalID
-1. TrueID
-1. SwitchedOrNot
-1. GeneticSex
-1. NominalSex_NewID
-1. SexMatchedOrNot
+For each sample, DRAMS assign a new ID if the sample has been detected as mixed-up. For the results, a table indicating the original and new sample ID for each sample will be generated. Here is the title and meaning of each column:
+1. OmicsType (Omics type)
+1. OriginalID (Original sample ID)
+1. TrueID (New ID assigned by DRAMS)
+1. SwitchedOrNot (Did the ID switched or not?)
+1. GeneticSex (Genetic sex of the sample)
+1. NominalSex_NewID (Nominal sex of the new ID)
+1. SexMatchedOrNot (Did the genetic sex and nominal sex of new ID matched or not?)
+[^_^]: # In addition to this table, DRAMS generates another table that is formated as input for Cytoscape visualization. Please see the guidance below on how to visualize sample relationships using Cytoscape.
 
 ## Data preparation
 ### Call genotypes
@@ -37,10 +38,12 @@ bash scripts/call_genotypes.step2.sh  # Call genotypes by GATK HaplotypeCaller
 ```
 
 ### Check sample contamination
-We recommend to check sample contamination and remove contaminated samples before run DRAMS. There are two options to check sample contamination. VerifyBamID (https://genome.sph.umich.edu/wiki/VerifyBamID) can be used based on BAM files for sequencing data. Another option is quite straightforward. We provided an AWK script to check sample contamination based on heterozygous rate. The two options have large consistency in our test data.
+We recommend to check sample contamination and remove contaminated samples before run DRAMS. There are two options to check sample contamination. VerifyBamID (https://genome.sph.umich.edu/wiki/VerifyBamID) can be used based on BAM files for sequencing data. Another option is quite straightforward. We provided an AWK script to check sample contamination based on heterozygous rate. We recommend to remove samples with heterozygous rate largely deviated from other samples.
 ```bash
 # Option1 (VerifyBamID):
-verifyBamID --vcf exampleID.vcf --bam exampleID.bam --out check.exampleID --verbose --ignoreRG
+ls exampleID*.vcf|while read file; do 
+    verifyBamID --vcf $file --bam exampleID.bam --out $file.check --verbose --ignoreRG
+done
 # Option2 (Heterozygous rate):
 ls exampleID*.vcf|while read file; do 
     awk 'BEGIN{FS="\t";OFS="\t"}$1!~/^#/{split($9,a,":");for(i in a){if(a[i]=="GQ") GQi=i;if(a[i]=="DP") DPi=i};split($10,a,":");if(a[GQi]<10||a[DPi]<3||a[DPi]>60) next;if($10~/^0\/0/){hom0++}else if($10~/^0\/1/){het++}else if($10~/^1\/1/){hom1++}}END{print "'$file'",hom0,het,hom1,het/(hom0+het+hom1)}' $file
@@ -48,6 +51,7 @@ done > heterozygous_rate.txt  # Calculate heterozygous rate for variants with GQ
 ```
 
 ### Infer genetic sex
+We recommend to use Plink to infer genetic sex based on X chromosome heterozygosity and Y chromosome call rate.
 ```bash
 plink --vcf exampleID.vcf --make-bed --out exampleID  # Convert VCF file to PLINK file (PLINK 1.9)
 plink --bfile exampleID --split-x hg19 --make-bed --out exampleID  # remove X chromosome pseudo-autosomal region
@@ -63,12 +67,12 @@ gcta64 --bfile exampleID --autosome --maf 0.01 --make-grm --out exampleID  # Est
 ```
 
 ### Extract highly related sample pairs
-The genetic relatedness scores were in bimodal distribution. We provided a script to extract highly related sample pairs based on the distribution. The results include a table of all highly related sample pairs, a density plot of the sample relatedness scores, and a summary table for the highly related sample pairs for each omics type. (Also a formated input for Cytoscape?)
+The genetic relatedness scores were in bimodal distribution. We provided a script to extract highly related sample pairs based on the distribution. The results include a table of all highly related sample pairs, a density plot of the sample relatedness scores, and a summary table for the highly related sample pairs for each omics type.
 ```bash
 python3 scripts/extract_highly_related_pairs.py --input_prefix=exampleID --output_prefix=exampleID --threshold=0.65 --min_loci=400
 ```
 
-### Guidance on visualize highly related sample pairs through Cytoscape
-This is not a necessary step for sample ID realignment, but we recommend to visualize the sample relationships to have a better understanding on how the samples switched.
+[^_^]: # ### Guidance on visualize highly related sample pairs through Cytoscape
+[^_^]: # This is not a necessary step for sample ID realignment, but we recommend to visualize the sample relationships to have a better understanding on how the samples switched.
 
 

@@ -19,7 +19,7 @@ done
 awk 'BEGIN{OFS="\t";print "OmicsType\tSampleID\tSNP_Sex"}FNR>1{print $2,$4}' data/genotypes.omics*.sexcheck|sed -e's/|/\t/' > data/samplelist.snpSex
 
 ## Merge the four omics data
-plink --bfile data/genotypes.omics1 --merge-list data/allfiles --make-bed --out data/genotypes.merge  # Merge input files. This step may be run several times if you have multiple input PLINK files.
+plink --bfile data/genotypes.omics1 --merge-list data/filelist --make-bed --out data/genotypes.merge  # Merge input files. This step may be run several times if you have multiple input PLINK files.
 
 ## Estimate genetic relatedness
 gcta64 --bfile data/genotypes.merge --autosome --maf 0.01 --make-grm --out data/genotypes.merge  # Estimate genetic relatedness by GCTA
