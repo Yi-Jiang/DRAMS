@@ -27,9 +27,6 @@ For each sample, DRAMS assign a new ID if the sample has been detected as mixed-
 1. GeneticSex (Genetic sex of the sample)
 1. NominalSex_NewID (Nominal sex of the new ID)
 1. SexMatchedOrNot (Did the genetic sex and nominal sex of new ID matched or not?)
-<div style='display: none'>
-In addition to this table, DRAMS generates another table that is formated as input for Cytoscape visualization. Please see the guidance below on how to visualize sample relationships using Cytoscape.
-</div>
 
 ## Data preparation
 ### Call genotypes
@@ -73,9 +70,3 @@ The genetic relatedness scores were in bimodal distribution. We provided a scrip
 ```bash
 python3 scripts/extract_highly_related_pairs.py --input_prefix=exampleID --output_prefix=exampleID --threshold=0.65 --min_loci=400
 ```
-
-<div style='display: none'>
-### Guidance on visualize highly related sample pairs through Cytoscape
-This is not a necessary step for sample ID realignment, but we recommend to visualize the sample relationships to have a better understanding on how the samples switched.
-</div>
-
