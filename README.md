@@ -61,7 +61,7 @@ plink --bfile exampleID --check-sex ycount 0.2 0.8 --out exampleID  # sexcheck (
 Genetic relatedness scores among all samples in all omics types were estimated by GCTA.
 Be noted that sample ID should be formated like this: "OmicsType|SampleID".
 ```bash
-plink --bfile exampleID1 --merge-list filelist --make-bed --out exampleID.merge  # Merge input files
+plink --bfile exampleID1 --merge-list mergelist.txt --make-bed --out exampleID.merge  # Merge input files, each file per line for the merge list.
 gcta64 --bfile exampleID --autosome --maf 0.01 --make-grm --out exampleID  # Estimate genetic relatedness by GCTA
 ```
 
