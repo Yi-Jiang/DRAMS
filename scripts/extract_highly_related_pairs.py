@@ -16,8 +16,8 @@ def usage():
     print("  --output_prefix=<STRING>   Prefix of output file")
     print("  --threshold=<FLOAT>        Threshold of genetic relatedness score to extract")
     print("                             highly related pairs [0.65]")
-    #print("  --min_loci=<INT>           Minimum number of overlapped loci required to")
-    #print("                             estimate sample relatedness scores [400]")
+    print("  --min_loci=<INT>           Minimum number of overlapped loci required to")
+    print("                             estimate sample relatedness scores [400]")
     print("  -h/--help                  Show this information")
 
 ## Default options
@@ -135,7 +135,10 @@ def ReadGRMBin(prefix, AllN = False):
             N = unpack(entry_format, record)[0]
             N = int(N)
     i = sum_n_vec(n)
-    out = {'diag': grm[i], 'off': np.delete(grm, i), 'id': ids, 'id_off': ids_off, 'id_diag': ids_diag, 'N': N}
+    if AllN:
+        out = {'diag': grm[i], 'off': np.delete(grm, i), 'id': ids, 'id_off': ids_off, 'id_diag': ids_diag, 'N_diag': N[i], 'N_off': np.delete(N, i)}
+    else:
+        out = {'diag': grm[i], 'off': np.delete(grm, i), 'id': ids, 'id_off': ids_off, 'id_diag': ids_diag, 'N': N}
     return(out)
 
 def plot_cor_distribution(d, output_prefix=output_prefix):
@@ -174,7 +177,7 @@ def format_pairs(d):
         dd[k] = np.array(dd[k])
     return dd
 
-def extract_relate_pairs(d, t=threshold):
+def extract_relate_pairs(d, t, N, minN):
     """
     Extract highly related sample pairs based on the distribution of sample relatedness
     relatePairs = { Omics1::Omics2 -> [ [SampleID1, SampleID2, Relatedness], ... ]}
@@ -183,9 +186,11 @@ def extract_relate_pairs(d, t=threshold):
     for k in d:
         if k not in relatePairs:
             relatePairs[k] = []
-        for p in d[k]:
-            if float(p[2])>t:
-                relatePairs[k].append(p)
+        for i in range(len(d[k])):
+            r = d[k][i]
+            n = N[k][i]
+            if float(n[2])>minN and float(r[2])>t:
+                relatePairs[k].append(r)
     for k in relatePairs:
         relatePairs[k] = np.array(relatePairs[k])
     return relatePairs
@@ -202,32 +207,37 @@ def output_pairs(d, output_prefix=output_prefix):
         nMatch = 0
         nMismatch = 0
         omics1,omics2 = k.split("::")
-        for p in d[k]:
-            if p[0]==p[1]:
+        for r in d[k]:
+            if r[0]==r[1]:
                 m = "Y"
                 nMatch += 1
             else:
                 m="N"
                 nMismatch += 1
-            f1.write("%s\t%s\t%s\t%s\t%s\t%s\n"%(omics1,p[0],omics2,p[1],p[2],m))
+            f1.write("%s\t%s\t%s\t%s\t%s\t%s\n"%(omics1,r[0],omics2,r[1],r[2],m))
         f2.write("%s\t%s\t%s\t%s\n"%(omics1,omics2,nMatch,nMismatch))
     f1.close()
     f2.close()
 
 if __name__ == "__main__":
     # Read GCTA results
-    grmres = ReadGRMBin(input_prefix)
+    grmres = ReadGRMBin(input_prefix, AllN=True)
     
-    # Format results
+    # Format results (relatedness scores)
     grmres['diag'] = np.ndarray.tolist(grmres['diag'])
     grmres['off'] = np.ndarray.tolist(grmres['off'])
     relatedness = format_pairs(dict(zip(grmres['id_off'], grmres['off'])))
+
+    # Format results (Number of loci being used)
+    grmres['N_diag'] = np.ndarray.tolist(grmres['N_diag'])
+    grmres['N_off'] = np.ndarray.tolist(grmres['N_off'])
+    Nloci = format_pairs(dict(zip(grmres['id_off'], grmres['N_off'])))
     
     # Plot distribution of sample relatedness scores
     plot_cor_distribution(relatedness)
     
     # Extract highly related sample pairs
-    relatePairs = extract_relate_pairs(relatedness, threshold)
+    relatePairs = extract_relate_pairs(relatedness, threshold, Nloci, min_loci)
     
     # Write highly related pairs and summary into files
     output_pairs(relatePairs)
