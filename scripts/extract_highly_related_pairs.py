@@ -148,7 +148,9 @@ def plot_cor_distribution(d, output_prefix=output_prefix):
     for k in d:
         plt.hist(list(map(float, d[k][:,2])), bins="auto", color='skyblue', ec='skyblue')
         plt.yscale('log')
-        plt.title("Genetic relatedness scores (%s)"%(k.replace("::","-")))
+        plt.title("%s"%(k.replace("::"," vs. ")))
+        plt.ylabel('Frequency')
+        plt.xlabel('Genetic relatedness scores')
         plt.savefig("%s.%s.relatedness.hist.pdf"%(output_prefix,k.replace("::","-")))
 
 def format_pairs(d):
