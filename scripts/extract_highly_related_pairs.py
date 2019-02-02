@@ -17,16 +17,18 @@ def usage():
     print("  --threshold=<FLOAT>        Threshold of genetic relatedness score to extract")
     print("                             highly related pairs [0.65]")
     print("  --min_loci=<INT>           Minimum number of overlapped loci required to")
-    print("                             estimate sample relatedness scores [400]")
+    print("                             estimate sample relatedness scores [0]")
+    print("  --plot                     Plot histograms of sample relatedness scores")
     print("  -h/--help                  Show this information")
 
 ## Default options
-min_loci = 400
+min_loci = 0
 threshold = 0.65
+plotHist = 0
 
 ## Deal with the options
 try:
-    opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "input_prefix=", "output_prefix=", "threshold=", "min_loci=", ] )
+    opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "input_prefix=", "output_prefix=", "threshold=", "min_loci=", "plot", ] )
 except getopt.GetoptError:
     print("get option error!")
     usage()
@@ -45,6 +47,8 @@ for opt, val in opts:
             threshold = float(val)
         if opt in ( "--min_loci", ):
             min_loci = int(val)
+        if opt in ( "--plot", ):
+            plotHist = 1
 
 ## Required options
 try: input_prefix, output_prefix
@@ -203,8 +207,10 @@ def output_pairs(d, output_prefix=output_prefix):
     """
     f1 = open("%s.highlyrelatedpairs.txt"%output_prefix, "w")
     f2 = open("%s.highlyrelatedpairs.summary.txt"%output_prefix, "w")
+    f3 = open("%s.highlyrelatedpairs.cytoscape.txt"%output_prefix, "w")
     f1.write("OmicsType1\tSampleID1\tOmicsType2\tSampleID2\tRelatedness\tMatch\n")
     f2.write("OmicsType1\tOmicsType2\t#matchedPair\t#mismatchedPair\n")
+    f3.write("Source\tInteraction\tTarget\n")
     for k in d:
         nMatch = 0
         nMismatch = 0
@@ -213,13 +219,16 @@ def output_pairs(d, output_prefix=output_prefix):
             if r[0]==r[1]:
                 m = "Y"
                 nMatch += 1
+                f3.write("%s|%s\tMatch\t%s|%s\n"%(omics1,r[0],omics2,r[1]))
             else:
                 m="N"
                 nMismatch += 1
+                f3.write("%s|%s\tMismatch\t%s|%s\n"%(omics1,r[0],omics2,r[1]))
             f1.write("%s\t%s\t%s\t%s\t%s\t%s\n"%(omics1,r[0],omics2,r[1],r[2],m))
         f2.write("%s\t%s\t%s\t%s\n"%(omics1,omics2,nMatch,nMismatch))
     f1.close()
     f2.close()
+    f3.close()
 
 if __name__ == "__main__":
     # Read GCTA results
@@ -236,7 +245,8 @@ if __name__ == "__main__":
     Nloci = format_pairs(dict(zip(grmres['id_off'], grmres['N_off'])))
     
     # Plot distribution of sample relatedness scores
-    plot_cor_distribution(relatedness)
+    if plotHist==1:
+        plot_cor_distribution(relatedness)
     
     # Extract highly related sample pairs
     relatePairs = extract_relate_pairs(relatedness, threshold, Nloci, min_loci)
