@@ -66,7 +66,19 @@ gcta64 --bfile exampleID --autosome --maf 0.01 --make-grm --out exampleID  # Est
 ```
 
 ### Extract highly related sample pairs
-The genetic relatedness scores were in bimodal distribution. We provided a script to extract highly related sample pairs based on the distribution. The results include a table of all highly related sample pairs, a density plot of the sample relatedness scores, and a summary table for the highly related sample pairs for each omics type.
+The genetic relatedness scores were in bimodal distribution. We provided a script to extract highly related sample pairs based on the distribution. The results include a table of all highly related sample pairs, histograms of the sample relatedness scores, a Cytoscape input file for visualizing sample relationships, and a summary table for the highly related sample pairs for each omics type.
 ```bash
-python3 scripts/extract_highly_related_pairs.py --input_prefix=exampleID --output_prefix=exampleID --threshold=0.65 --min_loci=400
+python3 scripts/extract_highly_related_pairs.py --input_prefix=exampleID --output_prefix=exampleID --threshold=0.65  --plot
 ```
+
+### Guideline of visualizing sample relationships using Cytoscape
+The Cytoscape input file named "exampleID.highlyrelatedpairs.cytoscape.txt" has been generated in previous step. Users can visualize the sample relationships among all the -omics types using Cytoscape. Here is the steps in detail:
+1. Load the Cytoscape software (recommended version > 3.0).
+1. Click File -> Import -> Network -> File.
+1. Select the file "exampleID.highlyrelatedpairs.cytoscape.txt" in the file chooser dialog.
+1. Define the first column as Source node and the second column as Target node. Click OK.
+1. We recommend to use different edge types to indicate matched and mismatched sample pairs. From the Control Panel on the left, select Style tag -> Edge -> Line Type -> Mapping. Choose the "interaction" column, then select Parallel Lines for "Match" and Solid for "Mismatch".
+Here is several examples of sample relationships visualization:
+![GitHub Logo](/images/SampleRelationExample.png)
+
+

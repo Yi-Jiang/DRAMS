@@ -25,7 +25,7 @@ plink --bfile data/genotypes.omics1 --merge-list data/filelist --make-bed --out 
 gcta64 --bfile data/genotypes.merge --autosome --maf 0.01 --make-grm --out data/genotypes.merge  # Estimate genetic relatedness by GCTA
 
 ## Extract highly related pairs
-python3 scripts/extract_highly_related_pairs.py --input_prefix=data/genotypes.merge --output_prefix=data/genotypes.merge --threshold=0.65 --min_loci=400
+python3 scripts/extract_highly_related_pairs.py --input_prefix=data/genotypes.merge --output_prefix=data/genotypes.merge --threshold=0.65 --plot
 
 ## Determine true IDs for each samples.
 python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=data/omics_priority --nsex=data/samplelist.nominalSex --gsex=data/samplelist.snpSex --output=data/res
