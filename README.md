@@ -78,6 +78,7 @@ The Cytoscape input file named "exampleID.highlyrelatedpairs.cytoscape.txt" has 
 1. Select the file "exampleID.highlyrelatedpairs.cytoscape.txt" in the file chooser dialog.
 1. Define the first column as Source node and the second column as Target node. Click OK.
 1. We recommend to use different edge types to indicate matched and mismatched sample pairs. From the Control Panel on the left, select Style tag -> Edge -> Line Type -> Mapping. Choose the "interaction" column, then select Parallel Lines for "Match" and Solid for "Mismatch".
+
 Here is several examples of sample relationships visualization:
 ![GitHub Logo](/images/SampleRelationExample.png)
 
