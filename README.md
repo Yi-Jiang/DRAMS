@@ -1,5 +1,5 @@
 # DRAMS
-A tool to Detect and Re-Align Mixed-up Samples based on multi-omics data.
+A tool to Detect and Re-Align Mixed-up Samples for Integrative Studies of Multi-omics Data.
 
 ## Highlights
 * Need at least three types of -omics data to run this tool.
