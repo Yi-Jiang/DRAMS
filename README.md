@@ -103,7 +103,13 @@ Basically, the genetic relatedness scores were in bimodal distribution. The thre
 python3 scripts/extract_highly_related_pairs.py --input_prefix=exampleID --output_prefix=exampleID --threshold=0.65  --plot
 ```
 
-### Guideline of visualizing data relationships using Cytoscape
+## Training logistic regression model
+We have used our BrainGVEX data to train the logistic regression model. The parameters trained from BrainGVEX data were provided as default. Users can also train their own model based their data. Here is an example for training:
+```bash
+
+```
+
+## Guideline of visualizing data relationships using Cytoscape
 The Cytoscape input file named "exampleID.highlyrelatedpairs.cytoscape.txt" has been generated in previous step. Users can visualize the data relationships among all the -omics types using Cytoscape. Here is the steps in detail:
 1. Load the Cytoscape software (recommended version > 3.0).
 1. Click File -> Import -> Network -> File.
@@ -114,8 +120,3 @@ The Cytoscape input file named "exampleID.highlyrelatedpairs.cytoscape.txt" has 
 Here is several examples of data relationships visualization:
 ![GitHub Logo](/images/SampleRelationExample.png)
 
-## Training logistic regression model
-We have used our BrainGVEX data to train the logistic regression model. The parameters trained from BrainGVEX data were provided as default. Users can also train their own model based their data. Here is an example for training:
-```bash
-
-```
