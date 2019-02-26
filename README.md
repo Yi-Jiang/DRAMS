@@ -2,9 +2,9 @@
 A tool to Detect and Re-Align Mixed-up Samples based on multi-omics data.
 
 ## Highlights
-* Need at least three omics types to run this tool.
+* Need at least three types of -omics data to run this tool.
 * Sex information is not necessary, but it’s better to have this information.
-* Users can set omics priority depending on which omics type they trust more.
+* Users can set -omics priority to indicate their confidence for the correctness of each -omics type.
 
 ## Software requirement
 * Linux operating system
@@ -18,7 +18,7 @@ To run the sample ID realignment procedure:
 python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=data/omics_priority --nsex=data/samplelist.reportedSex --gsex=data/samplelist.snpSex --output=data/res
 ```
 
-## Input files
+## Input file examples
 1. **Highly related data pairs** (Tab-separated). Please see [document below](#Estimate-genetic-relatedness-scores) for detailed procedure to create this file.
 
 | OmicsType1 | SampleID1 | OmicsType2 | SampleID2 | Relatedness | Match |
@@ -49,15 +49,15 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 | S1 | M |
 | S2 | F |
 
-## Results
-For each sample, DRAMS assign a new ID if the sample has been detected as mixed-up. For the results, a table indicating the original and new sample ID for each sample will be generated. Here is the title and meaning of each column:
+## Output file
+For each sample, DRAMS assign a new ID if the sample has been detected as a mix-up. For the results, a table indicating the original and new sample ID for each sample will be created. Here is the title and meaning of each column:
 1. OmicsType (Omics type)
 1. OriginalID (Original sample ID)
 1. TrueID (New ID assigned by DRAMS)
-1. SwitchedOrNot (Did the ID switched or not?)
-1. GeneticSex (Genetic sex of the sample)
+1. SwitchedOrNot (Sample ID changed or not)
+1. GeneticSex (Genetics-based sex of the sample)
 1. ReportedSex_NewID (Reported sex of the new ID)
-1. SexMatchedOrNot (Did the genetic sex and reported sex of new ID matched or not?)
+1. SexMatchedOrNot (Genetics-based sex and reported sex matched or not after correcting IDs)
 
 ## Data preparation
 ### Call genotypes
@@ -80,13 +80,14 @@ ls exampleID*.vcf|while read file; do
 done > heterozygous_rate.txt  # Calculate heterozygous rate for variants with GQ>=10 and 3<=DP<=60.
 ```
 
-### Infer genetic sex
-We recommend to use Plink to infer genetic sex based on X chromosome heterozygosity and Y chromosome call rate.
+### Infer genetics-based sexes
+For DNA-based data (such as WGS, ATAC-Seq), we recommend using Plink to infer genetics-based sexes based on X chromosome heterozygosity and Y chromosome call rate. Here is the example code of Plink:
 ```bash
 plink --vcf exampleID.vcf --make-bed --out exampleID  # Convert VCF file to PLINK file (PLINK 1.9)
 plink --bfile exampleID --split-x hg19 --make-bed --out exampleID  # remove X chromosome pseudo-autosomal region
 plink --bfile exampleID --check-sex ycount 0.2 0.8 --out exampleID  # sexcheck (Use default 0.2/0.8 F-statistic thresholds temporarily. As the PLINK website noted, the threshold should be determined by eyeballing the distribution of F-estimates)
 ```
+For RNA-Seq data, we recommend to infer genetics-based sexes according to XIST gene expression levels. We recommend considering samples with XIST expression larger than 2 (TPM, Transcripts Per Kilobase Million) as females.
 
 ### Estimate genetic relatedness scores
 Genetic relatedness scores among all samples in all omics types were estimated by GCTA.
