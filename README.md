@@ -15,11 +15,11 @@ A tool to Detect and Re-Align Mixed-up Samples based on multi-omics data.
 ## Get started
 To run the sample ID realignment procedure:
 ```bash
-python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=data/omics_priority --nsex=data/samplelist.nominalSex --gsex=data/samplelist.snpSex --output=data/res
+python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=data/omics_priority --nsex=data/samplelist.reportedSex --gsex=data/samplelist.snpSex --output=data/res
 ```
 
 ## Input files
-1. Highly related data pairs (Tab-separated). Please see [document below](#Estimate-genetic-relatedness-scores) for detailed procedure to create this file.
+1. **Highly related data pairs** (Tab-separated). Please see [document below](#Estimate-genetic-relatedness-scores) for detailed procedure to create this file.
 
 | OmicsType1 | SampleID1 | OmicsType2 | SampleID2 | Relatedness | Match |
 | ---------- | --------- | ---------- | --------- | ----------- | ----- |
@@ -27,13 +27,27 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 | omicsA | S2 | omicsB | S2 | 0.972 | Y |
 | omicsA | S3 | omicsC | S2 | 0.985 | N |
 
-1. Omics type priority file (Tab-separated). A numeric value ranging from 0 to 1 to indicate the user’s confidence for the correctness of each -omics type. The -omics types listed in one line separated by comma will be considered as one -omics type in the logistic regression.
+2. **Omics type priority file** (Tab-separated). A numeric value ranging from 0 to 1 to indicate the user’s confidence for the correctness of each -omics type. The -omics types listed in one line separated by comma will be considered as one -omics type in the logistic regression.
 
 | OmicsType | Priority |
 | ---------- | --------- |
 | omicsA | 0.97 |
 | omicsB | 0.93 |
 | omicsC,omicsD | 0.88 |
+
+3. **Reported sex file** (Tab-separated).
+
+| SampleID | ReportedSex |
+| ---------- | --------- |
+| S1 | M |
+| S2 | F |
+
+4. **Genetics-based sex file** (Tab-separated).
+
+| SampleID | GeneticSex |
+| ---------- | --------- |
+| S1 | M |
+| S2 | F |
 
 ## Results
 For each sample, DRAMS assign a new ID if the sample has been detected as mixed-up. For the results, a table indicating the original and new sample ID for each sample will be generated. Here is the title and meaning of each column:
@@ -42,8 +56,8 @@ For each sample, DRAMS assign a new ID if the sample has been detected as mixed-
 1. TrueID (New ID assigned by DRAMS)
 1. SwitchedOrNot (Did the ID switched or not?)
 1. GeneticSex (Genetic sex of the sample)
-1. NominalSex_NewID (Nominal sex of the new ID)
-1. SexMatchedOrNot (Did the genetic sex and nominal sex of new ID matched or not?)
+1. ReportedSex_NewID (Reported sex of the new ID)
+1. SexMatchedOrNot (Did the genetic sex and reported sex of new ID matched or not?)
 
 ## Data preparation
 ### Call genotypes
