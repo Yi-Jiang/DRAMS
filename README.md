@@ -21,11 +21,17 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 ## Input files
 1. Highly related data pairs (Tab-separated). Please see [document below](#Estimate-genetic-relatedness-scores) for detailed procedure to create this file.
 
-&nbsp;&nbsp;&nbsp;&nbsp;| OmicsType1 | SampleID1 | OmicsType2 | SampleID2 | Relatedness | Match |
-&nbsp;&nbsp;&nbsp;&nbsp;| ---------- | --------- | ---------- | --------- | ----------- | ----- |
-&nbsp;&nbsp;&nbsp;&nbsp;| omicsA | S1 | omicsB | S1 | 0.977 | Y |
-&nbsp;&nbsp;&nbsp;&nbsp;| omicsA | S2 | omicsB | S2 | 0.972 | Y |
-&nbsp;&nbsp;&nbsp;&nbsp;| omicsA | S3 | omicsC | S3 | 0.985 | Y |
+| OmicsType1 | SampleID1 | OmicsType2 | SampleID2 | Relatedness | Match |
+| ---------- | --------- | ---------- | --------- | ----------- | ----- |
+| omicsA | S1 | omicsB | S1 | 0.977 | Y |
+| omicsA | S2 | omicsB | S2 | 0.972 | Y |
+| omicsA | S3 | omicsC | S2 | 0.985 | N |
+
+1. Omics type priority file. A numeric value ranging from 0 to 1 to indicate the user’s confidence for the correctness of each -omics type. The -omics types listed in one line separated by comma will be considered as one -omics type in the logistic regression.
+
+| omicsA | 0.97 |
+| omicsB | 0.93 |
+| omicsC,omicsD | 0.88 |
 
 ## Results
 For each sample, DRAMS assign a new ID if the sample has been detected as mixed-up. For the results, a table indicating the original and new sample ID for each sample will be generated. Here is the title and meaning of each column:
