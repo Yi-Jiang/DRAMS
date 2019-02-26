@@ -14,19 +14,21 @@ def usage():
     print("  --prior=<STRING>    A file of omics priority.")
     print("                        Col1: Omics type. Multiple omics types separated by comma will be considered as one type.")
     print("                        Col2: Omics priority. Recommend to use proportion of sex-matched samples as priority (Range: 0~1).")
-    print("  --nsex=<STRING>     A file of sample list with nominal sex.")
+    print("  --nsex=<STRING>     A file of sample list with reported sex.")
     print("  --gsex=<STRING>     A file of sample list with genetic inferred sex.")
     print("  --coef=<STRING>     A list of coeffecients corresponding to \"intercept,a,b,c\" in Logistic Regression model. ")
     print("                        The values were separated by comma with no space. [0,4.41,8.94,0.19]")
+    print("  --train             To train the logistic regression model only.")
     print("  --output=<STRING>   Prefix of output files.")
     print("  -h/--help           Show this information.")
 
 ## Default options
 coef = [0, 4.41, 8.94, 0.19]
+train = 0
 
 ## Deal with the options
 try:
-    opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "pair=", "prior=", "nsex=", "gsex=", "coef=", "output=", ] )
+    opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "pair=", "prior=", "nsex=", "gsex=", "coef=", "train", "output=", ] )
 except getopt.GetoptError:
     print("get option error!")
     usage()
@@ -47,6 +49,8 @@ for opt, val in opts:
             gsexFile = val
         if opt in ( "--coef", ):
             coef = list(map(float, val.replace(" ","").split(",")))
+        if opt in ( "--train", ):
+            train = 1
         if opt in ( "--output", ):
             output = val
 
@@ -60,7 +64,7 @@ except:
 ## Initialize variables
 omicsSurrogate = dict()  # omicsType -> mergedOmicsTypes(surrogateOmicsType)
 omicsPriority = dict()   # surrogateOmicsType -> priorityScore
-nsex = dict()      # sampleID -> nominalSex
+nsex = dict()      # sampleID -> reportedSex
 gsex = dict()      # omicsType -> sampleID -> geneticSex
 match = dict()       # omicsType -> sampleID -> [sampleID1, sampleID2, ...]
 matchT = dict()      # omicsType -> sampleID -> [omicsType1, omicsType2, ...]
@@ -101,11 +105,11 @@ def read_priority(infile):
     print("  A total of %s omics types after merged: %s"%(len(omicsPriority), ", ".join(omicsSurrogateValues)))
     print()
 
-def read_nominal_sex(infile):
+def read_reported_sex(infile):
     """
-    Read sample list with nominal sex information.
+    Read sample list with reported sex information.
     """
-    print("## Reading sample list with nominal sex information ... ")
+    print("## Reading sample list with reported sex information ... ")
     if re.search(r'\.gz$',infile):
         f = gzip.open(infile,'rt')
     else:
@@ -134,7 +138,7 @@ def read_nominal_sex(infile):
     print("  Number of samples recognized: %s"%n)
     print("  Number of male samples: %s"%male)
     print("  Number of female samples: %s"%female)
-    print("  Number of samples with unknown nominal sex: %s"%unknownnsex)
+    print("  Number of samples with unknown reported sex: %s"%unknownnsex)
     print()
 
 def read_genetic_sex(infile):
@@ -508,7 +512,7 @@ def sort_nodes():
     
     print("## Writing output files ...")
     fd = open("%s.trueID"%output,'w')
-    fd.write("OmicsType\tOriginalID\tTrueID\tSwitchedOrNot\tGeneticSex\tNominalSex_NewID\tSexMatchedOrNot\n")
+    fd.write("OmicsType\tOriginalID\tTrueID\tSwitchedOrNot\tGeneticSex\tReportedSex_NewID\tSexMatchedOrNot\n")
     for i in trueID:
         for list0 in trueID[i]:
             fd.write("\t".join(list0))
@@ -519,11 +523,11 @@ def sort_nodes():
 
 if __name__ == "__main__":
     read_priority(priorFile)
-    read_nominal_sex(nsexFile)
+    read_reported_sex(nsexFile)
     read_genetic_sex(gsexFile)
     read_relate_pairs(pairFile)
     
-    ## Add training process later
+    ## add train later 
     
     judge_directions()
     sort_nodes()
