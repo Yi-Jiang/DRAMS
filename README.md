@@ -114,4 +114,8 @@ The Cytoscape input file named "exampleID.highlyrelatedpairs.cytoscape.txt" has 
 Here is several examples of data relationships visualization:
 ![GitHub Logo](/images/SampleRelationExample.png)
 
+## Training logistic regression model
+We have used our BrainGVEX data to train the logistic regression model. The parameters trained from BrainGVEX data were provided as default. Users can also train their own model based their data. Here is an example for training:
+```bash
 
+```
