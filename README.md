@@ -20,6 +20,7 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 
 ## Input files
 1. Highly related data pairs (Tab-separated). Please see [document below](#Estimate-genetic-relatedness-scores) for detailed procedure to create this file.
+
 | OmicsType1 | SampleID1 | OmicsType2 | SampleID2 | Relatedness | Match |
 | ---------- | --------- | ---------- | --------- | ----------- | ----- |
 | omicsA | S1 | omicsB | S1 | 0.977 | Y |
