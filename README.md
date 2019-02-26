@@ -29,6 +29,7 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 
 1. Omics type priority file. A numeric value ranging from 0 to 1 to indicate the user’s confidence for the correctness of each -omics type. The -omics types listed in one line separated by comma will be considered as one -omics type in the logistic regression.
 
+| ---------- | --------- |
 | omicsA | 0.97 |
 | omicsB | 0.93 |
 | omicsC,omicsD | 0.88 |
