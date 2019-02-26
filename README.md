@@ -50,12 +50,12 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 | S2 | F |
 
 ## Output file
-For each sample, DRAMS assign a new ID if the sample has been detected as a mix-up. For the results, a table indicating the original and new sample ID for each sample will be created. Here is the title and meaning of each column:
+For each data, DRAMS assign a new ID if the data has been detected as a mix-up. For the results, a table indicating the original and new sample ID for each data will be created. Here is the title and meaning of each column:
 1. OmicsType (Omics type)
 1. OriginalID (Original sample ID)
 1. TrueID (New ID assigned by DRAMS)
 1. SwitchedOrNot (Sample ID changed or not)
-1. GeneticSex (Genetics-based sex of the sample)
+1. GeneticSex (Genetics-based sex of the data)
 1. ReportedSex_NewID (Reported sex of the new ID)
 1. SexMatchedOrNot (Genetics-based sex and reported sex matched or not after correcting IDs)
 
@@ -81,37 +81,37 @@ done > heterozygous_rate.txt  # Calculate heterozygous rate for variants with GQ
 ```
 
 ### Infer genetics-based sexes
-For DNA-based data (such as WGS, ATAC-Seq), we recommend using Plink to infer genetics-based sexes based on X chromosome heterozygosity and Y chromosome call rate. Here is the example code of Plink:
+For DNA-based data (such as WGS, ATAC-Seq), we recommend using Plink to infer genetics-based sexes based on X chromosome heterozygosity and Y chromosome call rate. As the PLINK website noted, the threshold should be determined by eyeballing the distribution of F-estimates). Here is the example code of Plink:
 ```bash
 plink --vcf exampleID.vcf --make-bed --out exampleID  # Convert VCF file to PLINK file (PLINK 1.9)
 plink --bfile exampleID --split-x hg19 --make-bed --out exampleID  # remove X chromosome pseudo-autosomal region
 plink --bfile exampleID --check-sex ycount 0.2 0.8 --out exampleID  # sexcheck (Use default 0.2/0.8 F-statistic thresholds temporarily. As the PLINK website noted, the threshold should be determined by eyeballing the distribution of F-estimates)
 ```
-For RNA-Seq data, we recommend to infer genetics-based sexes according to XIST gene expression levels. We recommend considering samples with XIST expression larger than 2 (TPM, Transcripts Per Kilobase Million) as females.
+For RNA-Seq data, we recommend to infer genetics-based sexes according to XIST gene expression levels. In our study, we taked samples with XIST expression larger than 2 (TPM, Transcripts Per Kilobase Million) as females.
 
 ### Estimate genetic relatedness scores
-Genetic relatedness scores among all samples in all omics types were estimated by GCTA.
-Be noted that sample ID should be formated like this: "OmicsType|SampleID".
+Genetic relatedness scores among data of different -omics types were estimated by GCTA.
+Please be noted that sample ID should be formated like this: "OmicsType|SampleID".
 ```bash
 plink --bfile exampleID1 --merge-list mergelist.txt --make-bed --out exampleID.merge  # Merge input files, each file per line for the merge list.
 gcta64 --bfile exampleID --autosome --maf 0.01 --make-grm --out exampleID  # Estimate genetic relatedness by GCTA
 ```
 
-### Extract highly related sample pairs
-The genetic relatedness scores were in bimodal distribution. We provided a script to extract highly related sample pairs based on the distribution. The results include a table of all highly related sample pairs, histograms of the sample relatedness scores, a Cytoscape input file for visualizing sample relationships, and a summary table for the highly related sample pairs for each omics type.
+### Extract highly related data pairs
+Basically, the genetic relatedness scores were in bimodal distribution. The threshold to distinguish highly related data pairs from random pairs should be determined by eyeballing the distribution. Based on our BrainGVEX data, we set the threshold as 0.65 by default. We provided a script to extract highly related data pairs from GCTA results. The results include a table of all highly related sample pairs, histograms of the genetic relatedness scores, a Cytoscape input file for visualizing sample relationships, and a summary table for the highly related data pairs for each -omics type.
 ```bash
 python3 scripts/extract_highly_related_pairs.py --input_prefix=exampleID --output_prefix=exampleID --threshold=0.65  --plot
 ```
 
-### Guideline of visualizing sample relationships using Cytoscape
-The Cytoscape input file named "exampleID.highlyrelatedpairs.cytoscape.txt" has been generated in previous step. Users can visualize the sample relationships among all the -omics types using Cytoscape. Here is the steps in detail:
+### Guideline of visualizing data relationships using Cytoscape
+The Cytoscape input file named "exampleID.highlyrelatedpairs.cytoscape.txt" has been generated in previous step. Users can visualize the data relationships among all the -omics types using Cytoscape. Here is the steps in detail:
 1. Load the Cytoscape software (recommended version > 3.0).
 1. Click File -> Import -> Network -> File.
 1. Select the file "exampleID.highlyrelatedpairs.cytoscape.txt" in the file chooser dialog.
 1. Define the first column as Source node and the second column as Target node. Click OK.
-1. We recommend to use different edge types to indicate matched and mismatched sample pairs. From the Control Panel on the left, select Style tag -> Edge -> Line Type -> Mapping. Choose the "interaction" column, then select Parallel Lines for "Match" and Solid for "Mismatch".
+1. We recommend to use different edge types to indicate matched and mismatched data pairs. From the Control Panel on the left, select Style tag -> Edge -> Line Type -> Mapping. Choose the "interaction" column, then select Parallel Lines for "Match" and Solid for "Mismatch".
 
-Here is several examples of sample relationships visualization:
+Here is several examples of data relationships visualization:
 ![GitHub Logo](/images/SampleRelationExample.png)
 
 
