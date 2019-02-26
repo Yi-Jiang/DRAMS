@@ -3,6 +3,7 @@ A tool to Detect and Re-Align Mixed-up Samples for Integrative Studies of Multi-
 
 ## Highlights
 * Need at least three types of -omics data to run this tool.
+* We used a logistic regression model followed by a modified topological sorting algorithm to correct sample mix-ups based on data relationships of multi-omics.
 * Sex information is not necessary, but it’s better to have this information.
 * Users can set -omics priority to indicate their confidence for the correctness of each -omics type.
 
