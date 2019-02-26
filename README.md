@@ -42,7 +42,7 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 | S1 | M |
 | S2 | F |
 
-4. **Genetics-based sex file** (Tab-separated).
+4. **Genetics-based sex file** (Tab-separated). Please see [document below](#Infer-genetics-based-sexes) for recommended guideline to estimate genetics-based sexes.
 
 | SampleID | GeneticSex |
 | ---------- | --------- |
