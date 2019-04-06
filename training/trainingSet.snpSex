@@ -1,0 +1,1258 @@
+OmicsType	SampleID	SNP_Sex
+omics4	S143	M
+omics2	S143	M
+omics4	S145	M
+omics2	S145	M
+omics4	S149	F
+omics2	S149	F
+omics4	S152	M
+omics2	S152	M
+omics4	S155	F
+omics2	S155	F
+omics4	S159	M
+omics2	S159	M
+omics4	S280	F
+omics2	S11	F
+omics4	S251	F
+omics2	S162	F
+omics4	S265	F
+omics2	S15	F
+omics4	S270	M
+omics2	S14	M
+omics4	S275	M
+omics2	S13	M
+omics4	S224	F
+omics2	S12	F
+omics4	S178	F
+omics2	S178	F
+omics4	S180	M
+omics2	S180	M
+omics4	S182	F
+omics2	S182	F
+omics4	S184	F
+omics2	S184	F
+omics4	S187	F
+omics2	S187	F
+omics4	S192	M
+omics2	S192	M
+omics4	S194	F
+omics2	S194	F
+omics4	S35	M
+omics2	S35	M
+omics4	S39	M
+omics2	S134	M
+omics4	S44	U
+omics2	S44	F
+omics4	S49	M
+omics2	S49	M
+omics4	S219	M
+omics2	S219	M
+omics4	S225	M
+omics2	S225	M
+omics4	S230	M
+omics2	S230	M
+omics4	S70	M
+omics2	S70	M
+omics4	S74	F
+omics2	S74	F
+omics4	S78	M
+omics2	S78	M
+omics4	S82	F
+omics2	S82	F
+omics4	S86	M
+omics2	S86	M
+omics4	S89	U
+omics2	S89	M
+omics4	S92	M
+omics2	S92	M
+omics4	S94	F
+omics2	S94	F
+omics4	S96	F
+omics4	S106	F
+omics2	S106	F
+omics4	S111	M
+omics2	S111	M
+omics4	S115	F
+omics2	S115	F
+omics4	S119	M
+omics2	S119	M
+omics4	S223	F
+omics2	S223	F
+omics2	S16	F
+omics4	S229	M
+omics2	S229	M
+omics4	S235	M
+omics2	S235	M
+omics4	S241	M
+omics2	S241	M
+omics4	S245	F
+omics2	S245	F
+omics4	S250	M
+omics2	S250	M
+omics4	S122	M
+omics2	S122	M
+omics4	S125	F
+omics2	S125	F
+omics4	S128	F
+omics2	S128	F
+omics4	S131	M
+omics2	S131	M
+omics4	S133	F
+omics2	S133	M
+omics4	S136	M
+omics2	S136	M
+omics4	S138	M
+omics2	S138	M
+omics4	S258	M
+omics2	S258	M
+omics4	S264	M
+omics2	S54	M
+omics4	S269	M
+omics2	S269	M
+omics4	S274	F
+omics2	S274	F
+omics4	S142	M
+omics2	S142	M
+omics4	S144	F
+omics2	S144	F
+omics4	S148	M
+omics2	S148	M
+omics4	S287	M
+omics2	S287	M
+omics4	S288	M
+omics2	S288	M
+omics4	S289	M
+omics2	S289	M
+omics4	S293	F
+omics2	S293	F
+omics4	S295	M
+omics2	S295	M
+omics4	S5	U
+omics2	S5	M
+omics4	S151	M
+omics2	S151	M
+omics4	S154	U
+omics2	S154	M
+omics4	S158	F
+omics2	S158	F
+omics4	S161	F
+omics2	S161	F
+omics4	S164	M
+omics2	S164	M
+omics4	S166	M
+omics2	S166	M
+omics2	S17	M
+omics4	S168	F
+omics2	S168	F
+omics2	S198	M
+omics4	S3	F
+omics2	S3	F
+omics4	S4	M
+omics2	S4	M
+omics4	S8	M
+omics2	S8	M
+omics4	S10	F
+omics2	S10	F
+omics4	S18	M
+omics2	S18	M
+omics4	S19	M
+omics2	S19	M
+omics4	S21	F
+omics2	S21	F
+omics4	S23	F
+omics2	S23	F
+omics2	S69	F
+omics4	S25	F
+omics2	S25	F
+omics4	S28	M
+omics2	S28	M
+omics2	S173	M
+omics4	S174	M
+omics2	S174	M
+omics4	S175	M
+omics2	S175	M
+omics4	S27	M
+omics2	S27	M
+omics4	S30	F
+omics2	S30	F
+omics4	S34	M
+omics2	S34	M
+omics4	S38	F
+omics2	S38	F
+omics4	S43	M
+omics2	S43	M
+omics4	S48	F
+omics2	S48	F
+omics4	S140	M
+omics2	S29	M
+omics4	S279	M
+omics2	S169	M
+omics4	S282	M
+omics2	S167	M
+omics4	S283	M
+omics2	S24	M
+omics4	S285	M
+omics2	S165	M
+omics4	S42	F
+omics2	S42	M
+omics4	S47	F
+omics2	S47	M
+omics4	S51	F
+omics2	S51	F
+omics4	S52	M
+omics2	S52	M
+omics4	S53	M
+omics2	S53	M
+omics4	S54	M
+omics2	S264	M
+omics4	S55	M
+omics2	S55	M
+omics4	S186	F
+omics2	S186	F
+omics4	S190	F
+omics2	S190	M
+omics4	S66	F
+omics2	S66	F
+omics4	S73	F
+omics2	S73	F
+omics4	S77	F
+omics2	S77	F
+omics4	S81	M
+omics2	S81	M
+omics4	S85	F
+omics2	S85	F
+omics4	S88	M
+omics2	S88	M
+omics4	S91	F
+omics2	S91	M
+omics4	S234	F
+omics2	S20	F
+omics4	S249	F
+omics2	S249	F
+omics4	S257	M
+omics2	S257	M
+omics4	S263	M
+omics2	S263	M
+omics4	S268	M
+omics2	S268	M
+omics4	S273	M
+omics2	S273	M
+omics4	S278	F
+omics2	S278	F
+omics4	S150	M
+omics2	S294	M
+omics4	S153	M
+omics2	S292	M
+omics4	S157	F
+omics2	S291	F
+omics4	S160	M
+omics2	S160	M
+omics4	S294	M
+omics2	S150	M
+omics4	S2	M
+omics2	S147	M
+omics4	S7	F
+omics2	S256	F
+omics4	S11	F
+omics2	S248	F
+omics4	S57	M
+omics2	S57	M
+omics4	S60	F
+omics2	S60	F
+omics4	S62	M
+omics2	S62	M
+omics4	S193	F
+omics2	S193	F
+omics4	S195	M
+omics2	S195	M
+omics4	S196	M
+omics2	S196	M
+omics4	S197	M
+omics2	S197	M
+omics4	S203	F
+omics2	S203	F
+omics4	S56	F
+omics2	S56	F
+omics4	S59	M
+omics2	S59	M
+omics4	S64	F
+omics2	S64	F
+omics4	S72	F
+omics2	S72	F
+omics4	S76	M
+omics2	S76	M
+omics4	S80	F
+omics2	S80	F
+omics4	S84	M
+omics2	S84	M
+omics4	S200	F
+omics2	S277	F
+omics2	S200	F
+omics4	S198	F
+omics4	S199	M
+omics2	S199	M
+omics4	S201	M
+omics2	S201	M
+omics4	S202	M
+omics2	S202	M
+omics4	S204	F
+omics2	S204	F
+omics4	S206	M
+omics2	S206	M
+omics4	S207	M
+omics2	S207	M
+omics4	S63	M
+omics2	S63	M
+omics4	S100	F
+omics2	S100	F
+omics4	S103	F
+omics2	S103	F
+omics4	S105	M
+omics2	S105	M
+omics4	S110	F
+omics2	S110	F
+omics4	S213	F
+omics2	S213	F
+omics4	S215	M
+omics2	S130	M
+omics4	S218	M
+omics2	S218	M
+omics4	S222	M
+omics2	S222	M
+omics4	S228	M
+omics2	S228	M
+omics4	S233	F
+omics2	S233	F
+omics4	S240	F
+omics2	S240	M
+omics4	S244	M
+omics2	S244	M
+omics4	S262	F
+omics2	S2	F
+omics4	S109	F
+omics2	S109	F
+omics4	S114	F
+omics2	S114	F
+omics4	S121	F
+omics2	S121	F
+omics4	S124	M
+omics2	S124	M
+omics4	S127	M
+omics2	S127	M
+omics4	S130	F
+omics2	S215	F
+omics4	S134	F
+omics2	S96	F
+omics4	S243	F
+omics2	S243	F
+omics4	S255	F
+omics2	S255	F
+omics4	S6	M
+omics2	S280	M
+omics4	S12	M
+omics2	S272	M
+omics4	S13	M
+omics2	S224	M
+omics4	S14	F
+omics2	S275	F
+omics4	S15	F
+omics2	S270	F
+omics4	S156	M
+omics2	S254	M
+omics4	S162	F
+omics2	S251	F
+omics4	S165	M
+omics2	S239	M
+omics4	S167	M
+omics2	S286	M
+omics4	S169	M
+omics2	S285	M
+omics4	S20	M
+omics2	S238	M
+omics4	S22	M
+omics2	S265	M
+omics4	S24	M
+omics2	S232	M
+omics4	S29	M
+omics2	S282	M
+omics4	S33	M
+omics2	S279	M
+omics4	S37	M
+omics2	S141	M
+omics4	S46	M
+omics2	S139	M
+omics4	S170	M
+omics2	S170	M
+omics4	S171	M
+omics2	S171	M
+omics4	S172	F
+omics2	S172	F
+omics4	S36	F
+omics2	S36	F
+omics4	S41	F
+omics2	S41	F
+omics4	S45	F
+omics2	S45	F
+omics4	S176	F
+omics2	S176	F
+omics4	S177	M
+omics2	S177	M
+omics4	S179	F
+omics2	S179	F
+omics4	S181	M
+omics2	S181	M
+omics4	S183	F
+omics2	S183	F
+omics4	S185	F
+omics2	S185	M
+omics4	S189	F
+omics2	S189	F
+omics4	S191	F
+omics2	S191	F
+omics4	S209	M
+omics2	S209	M
+omics4	S68	M
+omics2	S68	M
+omics4	S71	M
+omics2	S71	M
+omics4	S75	M
+omics2	S75	M
+omics4	S79	F
+omics2	S79	F
+omics4	S83	M
+omics2	S83	M
+omics4	S87	M
+omics2	S87	M
+omics4	S90	M
+omics2	S90	M
+omics4	S208	M
+omics2	S208	M
+omics4	S210	F
+omics2	S210	F
+omics4	S211	M
+omics2	S211	M
+omics4	S212	M
+omics2	S212	M
+omics4	S214	M
+omics2	S214	M
+omics4	S217	F
+omics2	S217	F
+omics4	S221	M
+omics2	S221	M
+omics4	S227	M
+omics2	S227	M
+omics4	S93	F
+omics2	S93	F
+omics4	S95	F
+omics2	S95	F
+omics4	S97	M
+omics2	S97	M
+omics4	S98	M
+omics2	S98	M
+omics4	S99	M
+omics2	S99	M
+omics4	S102	M
+omics2	S102	M
+omics4	S104	M
+omics2	S104	M
+omics4	S108	F
+omics2	S108	F
+omics4	S113	M
+omics2	S113	M
+omics4	S216	F
+omics2	S216	F
+omics4	S226	F
+omics2	S226	F
+omics4	S237	F
+omics2	S237	F
+omics4	S242	M
+omics2	S242	M
+omics4	S247	M
+omics2	S247	M
+omics4	S253	M
+omics2	S253	M
+omics4	S261	M
+omics2	S261	M
+omics4	S107	F
+omics2	S107	F
+omics4	S118	M
+omics2	S118	M
+omics4	S120	M
+omics2	S120	M
+omics4	S123	F
+omics2	S123	F
+omics4	S126	F
+omics2	S126	F
+omics4	S129	M
+omics2	S129	M
+omics4	S132	M
+omics2	S132	M
+omics4	S135	F
+omics2	S135	F
+omics4	S137	M
+omics2	S137	M
+omics4	S260	M
+omics2	S260	M
+omics4	S267	M
+omics2	S267	M
+omics4	S271	F
+omics2	S271	F
+omics4	S276	M
+omics2	S276	M
+omics3	S143	M
+omics3	S145	M
+omics3	S149	M
+omics3	S152	M
+omics3	S155	F
+omics3	S159	M
+omics4	S272	M
+omics3	S13	M
+omics3	S20	F
+omics4	S232	M
+omics3	S24	M
+omics4	S239	M
+omics3	S165	M
+omics4	S254	F
+omics3	S162	F
+omics3	S156	F
+omics3	S22	M
+omics3	S15	M
+omics3	S14	F
+omics3	S178	F
+omics3	S180	M
+omics3	S182	F
+omics3	S184	F
+omics3	S187	F
+omics4	S188	F
+omics3	S188	F
+omics3	S192	M
+omics3	S194	F
+omics3	S35	M
+omics3	S39	M
+omics3	S44	F
+omics3	S49	M
+omics3	S219	M
+omics3	S225	M
+omics3	S230	M
+omics3	S70	M
+omics3	S74	F
+omics3	S78	M
+omics3	S82	F
+omics3	S86	M
+omics3	S89	M
+omics3	S92	M
+omics3	S94	F
+omics4	S101	M
+omics3	S101	M
+omics3	S106	F
+omics3	S111	M
+omics3	S115	F
+omics3	S119	M
+omics3	S223	U
+omics3	S229	M
+omics3	S235	M
+omics3	S241	M
+omics3	S245	F
+omics3	S96	M
+omics3	S250	M
+omics3	S122	M
+omics3	S125	F
+omics3	S128	F
+omics3	S131	M
+omics3	S133	M
+omics3	S136	M
+omics3	S138	M
+omics3	S258	M
+omics3	S264	M
+omics3	S269	M
+omics3	S274	F
+omics4	S277	M
+omics3	S277	M
+omics3	S142	M
+omics3	S144	F
+omics3	S148	M
+omics4	S284	F
+omics3	S284	F
+omics3	S287	M
+omics3	S288	M
+omics3	S289	M
+omics4	S290	M
+omics3	S290	M
+omics3	S293	F
+omics3	S295	M
+omics4	S1	M
+omics3	S5	M
+omics3	S1	M
+omics4	S146	F
+omics3	S146	F
+omics3	S151	M
+omics3	S154	M
+omics3	S158	F
+omics3	S161	F
+omics3	S164	M
+omics3	S166	M
+omics3	S168	F
+omics3	S198	M
+omics3	S3	F
+omics3	S4	M
+omics3	S8	M
+omics3	S10	F
+omics4	S16	M
+omics3	S16	M
+omics4	S17	M
+omics3	S17	M
+omics3	S18	M
+omics3	S19	M
+omics3	S21	F
+omics3	S23	F
+omics3	S25	F
+omics3	S28	M
+omics4	S173	F
+omics3	S173	F
+omics3	S174	M
+omics3	S175	M
+omics3	S27	M
+omics3	S30	F
+omics3	S34	M
+omics3	S38	F
+omics3	S43	M
+omics3	S48	F
+omics4	S50	M
+omics3	S50	M
+omics4	S139	M
+omics3	S46	M
+omics3	S40	M
+omics3	S33	M
+omics3	S29	M
+omics3	S26	M
+omics3	S169	M
+omics3	S42	M
+omics3	S47	M
+omics3	S51	F
+omics3	S52	M
+omics3	S53	M
+omics3	S54	M
+omics3	S55	M
+omics3	S186	F
+omics3	S190	M
+omics3	S66	F
+omics4	S69	M
+omics3	S69	M
+omics3	S73	F
+omics3	S77	F
+omics3	S81	M
+omics3	S85	F
+omics3	S88	M
+omics3	S91	M
+omics3	S12	F
+omics3	S249	U
+omics3	S257	M
+omics3	S263	M
+omics3	S268	M
+omics3	S273	M
+omics3	S278	F
+omics3	S2	M
+omics3	S294	M
+omics3	S292	U
+omics3	S291	M
+omics4	S238	M
+omics3	S9	M
+omics4	S291	M
+omics3	S160	M
+omics3	S153	M
+omics3	S150	M
+omics3	S262	F
+omics3	S256	F
+omics3	S57	M
+omics3	S60	F
+omics3	S62	M
+omics3	S195	M
+omics3	S196	M
+omics3	S197	M
+omics3	S56	F
+omics3	S59	M
+omics4	S61	M
+omics3	S61	M
+omics3	S64	U
+omics4	S65	F
+omics3	S65	U
+omics3	S72	F
+omics3	S76	M
+omics3	S80	F
+omics3	S84	M
+omics3	S200	F
+omics4	S256	F
+omics3	S11	F
+omics3	S199	M
+omics3	S201	M
+omics3	S202	M
+omics3	S204	F
+omics3	S206	M
+omics3	S207	M
+omics3	S63	M
+omics3	S100	F
+omics3	S103	F
+omics3	S105	M
+omics3	S110	F
+omics3	S213	F
+omics3	S130	M
+omics3	S218	M
+omics3	S222	M
+omics3	S228	M
+omics3	S233	F
+omics3	S240	U
+omics3	S244	M
+omics3	S7	F
+omics3	S109	F
+omics3	S114	F
+omics4	S117	M
+omics3	S117	M
+omics3	S121	F
+omics3	S124	M
+omics3	S127	M
+omics3	S215	F
+omics3	S134	F
+omics3	S243	F
+omics4	S246	F
+omics3	S246	F
+omics3	S255	F
+omics4	S259	M
+omics3	S259	M
+omics3	S248	M
+omics4	S9	F
+omics3	S238	F
+omics3	S234	M
+omics3	S272	M
+omics3	S224	F
+omics3	S275	F
+omics3	S265	M
+omics3	S254	F
+omics3	S239	M
+omics3	S286	M
+omics3	S285	M
+omics3	S280	M
+omics3	S270	M
+omics3	S232	M
+omics3	S282	M
+omics3	S279	M
+omics3	S141	M
+omics3	S139	M
+omics3	S170	M
+omics3	S171	M
+omics3	S172	F
+omics4	S32	F
+omics3	S32	F
+omics3	S36	F
+omics3	S41	F
+omics3	S45	F
+omics3	S176	F
+omics3	S177	M
+omics3	S179	F
+omics3	S181	M
+omics3	S183	F
+omics3	S185	M
+omics3	S189	F
+omics3	S191	F
+omics3	S209	M
+omics3	S68	M
+omics3	S71	M
+omics3	S75	M
+omics3	S79	F
+omics3	S83	M
+omics3	S87	M
+omics3	S90	M
+omics3	S208	M
+omics3	S210	F
+omics3	S211	M
+omics3	S212	M
+omics3	S214	M
+omics3	S217	F
+omics3	S221	M
+omics3	S227	M
+omics3	S93	F
+omics3	S95	F
+omics3	S97	M
+omics3	S98	M
+omics3	S99	M
+omics3	S102	M
+omics3	S104	M
+omics3	S108	F
+omics3	S113	M
+omics4	S116	F
+omics3	S116	F
+omics3	S216	F
+omics3	S226	F
+omics3	S237	F
+omics3	S242	M
+omics3	S247	M
+omics3	S253	M
+omics3	S261	M
+omics4	S266	M
+omics3	S266	M
+omics3	S107	F
+omics4	S112	M
+omics3	S112	M
+omics3	S118	M
+omics3	S120	M
+omics3	S123	M
+omics3	S126	U
+omics3	S129	M
+omics3	S132	M
+omics3	S135	F
+omics3	S137	M
+omics4	S252	M
+omics3	S252	M
+omics3	S260	M
+omics3	S267	M
+omics3	S271	F
+omics3	S276	M
+omics4	S281	M
+omics3	S281	M
+omics4	S147	M
+omics4	S163	F
+omics4	S236	M
+omics2	S26	M
+omics2	S163	M
+omics2	S153	F
+omics2	S7	F
+omics2	S283	M
+omics2	S156	M
+omics2	S262	F
+omics2	S140	M
+omics3	S37	M
+omics3	S167	M
+omics3	S157	F
+omics3	S6	F
+omics3	S283	M
+omics3	S231	M
+omics3	S163	M
+omics3	S147	F
+omics3	S140	M
+omics1	S149	F
+omics1	S155	F
+omics1	S159	M
+omics1	S9	M
+omics1	S162	F
+omics1	S205	M
+omics1	S11	F
+omics1	S22	F
+omics1	S15	F
+omics1	S14	M
+omics1	S13	M
+omics1	S178	F
+omics1	S269	M
+omics1	S182	F
+omics1	S187	F
+omics1	S188	F
+omics1	S192	M
+omics1	S194	F
+omics1	S134	M
+omics1	S49	M
+omics1	S219	M
+omics1	S225	M
+omics1	S230	M
+omics1	S94	F
+omics1	S111	M
+omics1	S115	F
+omics1	S229	M
+omics1	S235	M
+omics1	S245	F
+omics1	S250	M
+omics1	S125	F
+omics1	S128	F
+omics1	S131	M
+omics1	S54	M
+omics1	S180	M
+omics1	S284	F
+omics1	S287	M
+omics1	S288	M
+omics1	S289	M
+omics1	S290	M
+omics1	S295	M
+omics1	S146	F
+omics1	S168	F
+omics1	S4	M
+omics1	S8	M
+omics1	S18	M
+omics1	S174	M
+omics1	S175	M
+omics1	S27	M
+omics1	S30	F
+omics1	S34	M
+omics1	S48	F
+omics1	S33	M
+omics1	S29	M
+omics1	S26	M
+omics1	S167	M
+omics1	S24	M
+omics1	S165	M
+omics1	S163	M
+omics1	S47	M
+omics1	S73	F
+omics1	S81	M
+omics1	S85	F
+omics1	S88	M
+omics1	S20	F
+omics1	S263	M
+omics1	S294	M
+omics1	S292	M
+omics1	S291	F
+omics1	S160	M
+omics1	S6	M
+omics1	S157	M
+omics1	S153	F
+omics1	S150	M
+omics1	S256	F
+omics1	S248	F
+omics1	S57	M
+omics1	S193	F
+omics1	S195	M
+omics1	S196	M
+omics1	S197	M
+omics1	S56	F
+omics1	S64	F
+omics1	S65	F
+omics1	S72	F
+omics1	S76	M
+omics1	S80	F
+omics1	S7	F
+omics1	S201	M
+omics1	S202	M
+omics1	S206	M
+omics1	S110	F
+omics1	S213	F
+omics1	S215	F
+omics1	S218	M
+omics1	S222	M
+omics1	S240	M
+omics1	S244	M
+omics1	S2	F
+omics1	S117	M
+omics1	S121	F
+omics1	S124	M
+omics1	S130	M
+omics1	S255	F
+omics1	S259	M
+omics1	S280	M
+omics1	S234	F
+omics1	S272	M
+omics1	S224	M
+omics1	S275	F
+omics1	S254	M
+omics1	S251	F
+omics1	S239	M
+omics1	S285	M
+omics1	S283	M
+omics1	S282	M
+omics1	S279	M
+omics1	S36	F
+omics1	S41	F
+omics1	S45	F
+omics1	S179	F
+omics1	S183	F
+omics1	S185	M
+omics1	S189	F
+omics1	S191	F
+omics1	S236	M
+omics1	S209	M
+omics1	S68	M
+omics1	S71	M
+omics1	S75	M
+omics1	S79	F
+omics1	S87	M
+omics1	S90	M
+omics1	S208	M
+omics1	S210	F
+omics1	S212	M
+omics1	S214	M
+omics1	S217	F
+omics1	S221	M
+omics1	S227	M
+omics1	S93	F
+omics1	S95	F
+omics1	S98	M
+omics1	S99	M
+omics1	S102	M
+omics1	S104	M
+omics1	S108	F
+omics1	S231	M
+omics1	S242	M
+omics1	S247	M
+omics1	S253	M
+omics1	S107	F
+omics1	S281	M
+omics1	S156	M
+omics1	S262	F
+omics1	S232	M
+omics1	S141	M
+omics1	S140	M
+omics1	S137	M
+omics1	S58	F
+omics1	S261	M
+omics1	S266	M
+omics1	S112	M
+omics1	S118	M
+omics1	S172	F
+omics1	S129	M
+omics1	S132	M
+omics1	S135	F
+omics1	S173	M
+omics1	S70	M
+omics1	S273	M
+omics1	S241	M
+omics1	S10	F
+omics1	S74	F
+omics1	S190	M
+omics1	S142	M
+omics1	S278	F
+omics1	S91	M
+omics1	S264	M
+omics3		M
+omics3		M
+omics3		F
+omics3		M
+omics3		M
+omics3		F
+omics3		F
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		F
+omics3		F
+omics3		F
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		U
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		F
+omics3		M
+omics3		M
+omics3		F
+omics3		M
+omics3		F
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		F
+omics3		F
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		F
+omics3		M
+omics3		F
+omics3		F
+omics3		F
+omics3		M
+omics3		F
+omics3		F
+omics3		M
+omics3		M
+omics3		M
+omics3		F
+omics3		M
+omics3		F
+omics3		M
+omics3		F
+omics3		M
+omics3		M
+omics3		F
+omics3		F
+omics3		M
+omics3		M
+omics3		F
+omics3		M
+omics3		F
+omics3		M
+omics3		F
+omics3		M
+omics3		F
+omics3		M
+omics3		F
+omics3		M
+omics3		M
+omics3		M
+omics3		F
+omics3		F
+omics3		M
+omics3		M
+omics3		M
+omics3		F
+omics3		U
+omics3		F
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		F
+omics3		F
+omics3		M
+omics3		F
+omics3		F
+omics3		F
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		F
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		F
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		M
+omics3		F
+omics3		M
+omics3		F
+omics3		M
+omics3		F
+omics3		F
+omics3		F
+omics3		M
+omics3		M
+omics3		F
+omics3	S67	M
+omics2	S67	M
+omics2	S252	M
+omics1	S145	M
+omics1	S152	M
+omics1	S265	M
+omics1	S270	F
+omics1	S184	F
+omics1	S35	M
+omics1	S44	F
+omics1	S78	M
+omics1	S82	F
+omics1	S86	M
+omics1	S89	U
+omics1	S92	M
+omics1	S96	F
+omics1	S101	M
+omics1	S106	F
+omics1	S119	M
+omics1	S223	F
+omics1	S122	U
+omics1	S133	M
+omics1	S136	M
+omics1	S138	M
+omics1	S258	M
+omics1	S274	F
+omics1	S277	F
+omics1	S144	F
+omics1	S148	M
+omics1	S293	F
+omics1	S5	M
+omics1	S151	M
+omics1	S154	M
+omics1	S158	F
+omics1	S161	F
+omics1	S164	M
+omics1	S166	M
+omics1	S3	F
+omics1	S16	F
+omics1	S17	M
+omics1	S19	M
+omics1	S21	F
+omics1	S23	F
+omics1	S25	F
+omics1	S28	F
+omics1	S38	F
+omics1	S43	M
+omics1	S50	M
+omics1	S139	M
+omics1	S286	M
+omics1	S42	M
+omics1	S51	F
+omics1	S52	M
+omics1	S53	M
+omics1	S55	M
+omics1	S186	F
+omics1	S66	F
+omics1	S69	F
+omics1	S77	F
+omics1	S147	M
+omics1	S249	F
+omics1	S257	M
+omics1	S268	M
+omics4	S248	M
+omics1	S60	M
+omics1	S62	M
+omics1	S203	F
+omics1	S59	M
+omics1	S84	M
+omics1	S200	F
+omics1	S198	M
+omics1	S199	M
+omics1	S204	F
+omics1	S207	M
+omics1	S63	M
+omics1	S100	F
+omics1	S103	F
+omics1	S105	M
+omics1	S228	M
+omics1	S233	F
+omics1	S109	F
+omics1	S114	F
+omics1	S127	M
+omics1	S246	F
+omics1	S12	F
+omics1	S169	M
+omics1	S170	M
+omics1	S177	M
+omics1	S181	M
+omics1	S83	M
+omics1	S211	M
+omics1	S97	M
+omics1	S113	M
+omics1	S116	F
+omics1	S216	F
+omics1	S226	F
+omics1	S237	F
+omics1	S120	M
+omics1	S123	F
+omics1	S126	F
+omics1	S252	M
+omics1	S260	M
+omics1	S267	M
+omics1	S271	F
+omics1	S276	M
+omics1	S39	M
+omics2	S39	M
+omics1	S67	M
+omics1	S220	M
+omics3	S220	M
+omics1	S31	F
+omics3	S251	F
