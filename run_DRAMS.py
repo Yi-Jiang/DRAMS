@@ -1,4 +1,4 @@
-## To extract highly related sample pairs from GCTA results.
+## To extract highly related data pairs from GCTA results.
 ## Yi Jiang, October 2018
 
 ## Import modules
@@ -10,25 +10,25 @@ import numpy as np
 def usage():
     print("")
     print("Usage: python %s -option <argument>" %sys.argv[0])
-    print("  --pair=<STRING>     A file of highly related sample pairs.")
+    print("  --pair=<STRING>     A file of highly related data pairs.")
     print("  --prior=<STRING>    A file of omics priority.")
     print("                        Col1: Omics type. Multiple omics types separated by comma will be considered as one type.")
     print("                        Col2: Omics priority. Recommend to use proportion of sex-matched samples as priority (Range: 0~1).")
     print("  --nsex=<STRING>     A file of sample list with reported sex.")
     print("  --gsex=<STRING>     A file of sample list with genetic inferred sex.")
     print("  --coef=<STRING>     A list of coeffecients corresponding to \"intercept,a,b,c\" in Logistic Regression model. ")
-    print("                        The values were separated by comma with no space. [0,4.41,8.94,0.19]")
-    print("  --train             To train the logistic regression model only.")
+    print("                        The values were separated by comma with no space. [0,24.14,0.89,3.39]")
+    print("  --train=<STRING>    A list of data pairs with known switch directions being used as training set. If this parameter is specified, it will only train the logistic regression model.")
     print("  --output=<STRING>   Prefix of output files.")
     print("  -h/--help           Show this information.")
 
 ## Default options
-coef = [0, 4.41, 8.94, 0.19]
+coef = [0,24.14,0.89,3.39]
 train = 0
 
 ## Deal with the options
 try:
-    opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "pair=", "prior=", "nsex=", "gsex=", "coef=", "train", "output=", ] )
+    opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "pair=", "prior=", "nsex=", "gsex=", "coef=", "train=", "output=", ] )
 except getopt.GetoptError:
     print("get option error!")
     usage()
@@ -50,16 +50,16 @@ for opt, val in opts:
         if opt in ( "--coef", ):
             coef = list(map(float, val.replace(" ","").split(",")))
         if opt in ( "--train", ):
-            train = 1
+            train = val
         if opt in ( "--output", ):
             output = val
 
-## Required options
-try: pairFile, priorFile, nsexFile, gsexFile, output
-except:
-    print("\nMissing options!")
-    usage()
-    sys.exit(2)
+### Required options
+#try: pairFile, priorFile, nsexFile, gsexFile, output
+#except:
+#    print("\nMissing options!")
+#    usage()
+#    sys.exit(2)
 
 ## Initialize variables
 omicsSurrogate = dict()  # omicsType -> mergedOmicsTypes(surrogateOmicsType)
@@ -189,9 +189,9 @@ def read_genetic_sex(infile):
 
 def read_relate_pairs(infile):
     """
-    Read highly related sample pairs.
+    Read highly related data pairs.
     """
-    print("## Reading highly related sample pairs ... ")
+    print("## Reading highly related data pairs ... ")
     for t in omicsSurrogate:
         match[t] = dict()
         matchT[t] = dict()
@@ -299,67 +299,77 @@ def train_logistic():
     """
     Training parameters in Logistic Regression.
     """
-    print("## Training parameters in Logistic Regression ... ")
-    ## Extract high-confidence sample swithes
-    trainList = []
+    print("## Reading training set ... ")
+    trueset = []
+    if re.search(r'\.gz$',train):
+        f = gzip.open(train,'rt')
+    else:
+        f = open(train,'r')
+    f.readline()
+    while 1:
+        l = f.readline()
+        if not l:
+            break
+        s = l.rstrip("\n").split("\t")
+        if s[2]=="->":
+            trueset.append("%s|%s|%s|%s"%(s[0],s[1],s[3],s[4]))
+        elif s[2]=="<-":
+            trueset.append("%s|%s|%s|%s"%(s[3],s[4],s[0],s[1]))
+        else:
+            print("  Warning: Please use \"->\" and \"-<\" in the 3rd column to indicate the directions.")
+            continue
+    f.close()
+    print("  Number of data pairs used in training set: %s"%(len(trueset)))
+    
+    print("## Preparing parameters for training ... ")
+    ## Generate training set
+    d = 1
+    nOmicsMerge = len(omicsPriority)
+    ft = open("%s.train"%output,'w')
+    ft.write("difA\tdifB\tdifC\tdirection\n")
     for t in mismatch:
         for m in mismatch[t]:
             mt = t
+            #print(mt,m,cal_numOmics(mt,m),nOmicsMerge)
             A1 = cal_numOmics(mt,m)/nOmicsMerge
             for i in range(len(mismatch[t][m])):
                 n = mismatch[t][m][i]
                 nt = mismatchT[t][m][i]
+                #print(nt,n,cal_numOmics(nt,n),nOmicsMerge)
                 A2 = cal_numOmics(nt,n)/nOmicsMerge
                 B1 = 0
-                if sex[mt][m][0]==sex[mt][m][1]: B1 += 0.5   # nSex(target)==gSex(target)
-                if sex[mt][m][0]==sex[nt][n][1]: B1 += 0.5   # nSex(target)==gSex(source)
+                if nsex[m]==gsex[mt][m]: B1 += 0.5   # nSex(target)==gSex(target)
+                if nsex[m]==gsex[nt][n]: B1 += 0.5   # nSex(target)==gSex(source)
                 B2 = 0
-                if sex[nt][n][0]==sex[nt][n][1]: B2 += 0.5   # nSex(target)==gSex(target)
-                if sex[nt][n][0]==sex[mt][m][1]: B2 += 0.5   # nSex(target)==gSex(source)
-                C1 = typeDict[typeFake[mt]]
-                C2 = typeDict[typeFake[nt]]
-                ## strict criterion to generate training set: consider both omics and sex
-                #if (A1>=A2 and (sex[mt][m][0]==sex[mt][m][1] and sex[nt][n][1]==sex[mt][m][0] and sex[mt][m][1]!="NA") and (sex[nt][n][0]!=sex[nt][n][1] or sex[mt][m][1]!=sex[nt][n][0])) or (A1<=A2 and (sex[nt][n][0]==sex[nt][n][1] and sex[mt][m][1]==sex[nt][n][0] and sex[nt][n][1]!="NA") and (sex[mt][m][0]!=sex[mt][m][1] or sex[nt][n][1]!=sex[mt][m][0])):
-                if (A1>=A2 and B1==1 and B2<1) or (A1<=A2 and B2==1 and B1<1):
-                    trainList.append([A1,A2,B1,B2,C1,C2])
-    print("  Number of sample pairs used in training set: %s"%(len(trainList)))
-    ## Generate training set
-    ft = open("%s.train"%prefix,'w')
-    ft.write("difA\tdifB\tdifC\tleftward\n")
-    nPositive = int(len(trainList)/2)
-    for i in range(len(trainList)):
-        A1,A2,B1,B2,C1,C2 = trainList[i]
-        if i<nPositive:
-            if B1>B2:
+                if nsex[n]==gsex[nt][n]: B2 += 0.5   # nSex(target)==gSex(target)
+                if nsex[n]==gsex[mt][m]: B2 += 0.5   # nSex(target)==gSex(source)
+                C1 = omicsPriority[omicsSurrogate[mt]]
+                C2 = omicsPriority[omicsSurrogate[nt]]
                 difA = A1 - A2
                 difB = B1 - B2
-                difC = C1 - C2
-            else:
-                difA = A2 - A1
-                difB = B2 - B1
-                difC = C2 - C1
-            ft.write("\t".join(["%.2g"%difA,"%.2g"%difB,"%.2g"%difC,"1"]))
-            ft.write("\n")
-        else:
-            if B1>B2:
-                difA = A2 - A1
-                difB = B2 - B1
-                difC = C2 - C1
-            else:
-                difA = A1 - A2
-                difB = B1 - B2
-                difC = C1 - C2
-            ft.write("\t".join(["%.2g"%difA,"%.2g"%difB,"%.2g"%difC,"0"]))
-            ft.write("\n")
+                difC = -(C1 - C2)
+                if difC!=0: difC = difC/abs(difC)
+                
+                k1 = "|".join([m,mt,n,nt])
+                k2 = "|".join([n,nt,m,mt])
+                
+                if k1 in trueset:
+                    ft.write("%.2g\t%.2g\t%.2g\t%d\n"%(-difA*d,-difB*d,-difC*d,d))
+                    d = -1 * d
+                elif k2 in trueset:
+                    ft.write("%.2g\t%.2g\t%.2g\t%d\n"%(difA*d,difB*d,difC*d,d))
+                    d = -1 * d
+                
     ft.close()
     
+    print("## Training logistic regression model ... ")
     ## Model
     #import matplotlib.pyplot as plt
     import pandas as pd
     from patsy import dmatrices
     
     # Importing the dataset
-    dataset = pd.read_table("%s.train"%prefix)
+    dataset = pd.read_table("%s.train"%output)
     # plt.hist(dataset.iloc[:,0].values)
     # plt.hist(dataset.iloc[:,1].values)
     # plt.hist(dataset.iloc[:,2].values)
@@ -373,13 +383,15 @@ def train_logistic():
     from sklearn.linear_model import LogisticRegression
     model = LogisticRegression(fit_intercept = False, C = 1e9)
     model.fit(X, y)
+    intercept = 0
+    #intercept = model.intercept_
     coef = model.coef_
     coef = np.ndarray.tolist(coef)[0]
     print("## Logistic model:")
-    print("Intercept: %s"%coef[0])
-    print("a: %s"%coef[1])
-    print("b: %s"%coef[2])
-    print("c: %s"%coef[3])
+    print("Intercept: %s"%intercept)
+    print("a: %s"%coef[0])
+    print("b: %s"%coef[1])
+    print("c: %s"%coef[2])
     print()
 
 def judge_directions():
@@ -416,8 +428,10 @@ def judge_directions():
                     if nsex_n==gsex_m: Bn += 0.5   # nSex(target)==gSex(source)
                     difB = Bm - Bn
                 
-                difC = omicsPriority[omicsSurrogate[mt]] - omicsPriority[omicsSurrogate[nt]]
-                
+                #difC = omicsPriority[omicsSurrogate[mt]] - omicsPriority[omicsSurrogate[nt]]
+                difC = -(omicsPriority[omicsSurrogate[mt]] - omicsPriority[omicsSurrogate[nt]])
+                if difC!=0: difC = difC/abs(difC)
+	 
                 ## Scoring
                 intercept,a,b,c = coef
                 x = intercept + a*difA + b*difB + c*difC
@@ -427,13 +441,13 @@ def judge_directions():
                 
                 ## Judge direction for each pair
                 if S>0:
-                    fc.write("\t".join([nt,n,"%s|%s"%(nt,n),mt,m,"%s|%s"%(mt,m),"left2right","%.2g"%difA,"%.2g"%difB,"%.2g"%difC,"%.2g"%S]))
+                    fc.write("\t".join([nt,n,"%s|%s"%(nt,n),mt,m,"%s|%s"%(mt,m),"left2right","%.2g"%difA,"%.2g"%difB,"%.2g"%Bm,"%.2g"%Bn,"%.2g"%difC,"%.2g"%S]))
                     #fc.write("\t".join([nt,n,"%s|%s"%(nt,n),mt,m,"%s|%s"%(mt,m),"left2right","%.2g"%S]))
                     indegree["%s|%s"%(mt,m)] += S
                     nMisDirected += 1
                 elif S<0:
-                    fc.write("\t".join([mt,m,"%s|%s"%(mt,m),nt,n,"%s|%s"%(nt,n),"left2right","%.2g"%difA,"%.2g"%difB,"%.2g"%difC,"%.2g"%S]))
-                    #fc.write("\t".join([mt,m,"%s|%s"%(mt,m),nt,n,"%s|%s"%(nt,n),"left2right","%.2g"%S]))
+                    fc.write("\t".join([mt,m,"%s|%s"%(mt,m),nt,n,"%s|%s"%(nt,n),"left2right","%.2g"%(-difA),"%.2g"%(-difB),"%.2g"%(-Bm),"%.2g"%(-Bn),"%.2g"%(-difC),"%.2g"%(-S)]))
+                    #fc.write("\t".join([mt,m,"%s|%s"%(mt,m),nt,n,"%s|%s"%(nt,n),"left2right","%.2g"%(-S)]))
                     indegree["%s|%s"%(nt,n)] -= S
                     nMisDirected += 1
                 else:
@@ -457,7 +471,7 @@ def judge_directions():
                 uniqlist.append(pair0)
     
     fc.close()
-    print("  For a total of %s mismatched sample pairs, %s pairs with directions estimated."%(nMis,nMisDirected))
+    print("  For a total of %s mismatched data pairs, %s pairs with directions estimated."%(nMis,nMisDirected))
     print()
 
 def sort_nodes():
@@ -528,6 +542,9 @@ if __name__ == "__main__":
     read_relate_pairs(pairFile)
     
     ## add train later 
+    if train!=0:
+        train_logistic()
+        sys.exit(1)
     
     judge_directions()
     sort_nodes()

@@ -3,8 +3,8 @@ A tool to Detect and Re-Align Mixed-up Samples for Integrative Studies of Multi-
 
 ## Highlights
 * Need at least three types of -omics data to run this tool.
-* We used a logistic regression model followed by a modified topological sorting algorithm to correct sample mix-ups based on data relationships of multi-omics.
-* Sex information is not necessary, but it’s better to have this information.
+* We used a logistic regression model followed by a modified topological sorting algorithm to correct sample mix-ups based on data relationships of multi-omics. User can also train there own logistic regression model.
+* Sex information is not necessary, but having both genetics-based and reported sexes will help identify true IDs.
 * Users can set -omics priority to indicate their confidence for the correctness of each -omics type.
 
 ## Software requirement
@@ -14,7 +14,8 @@ A tool to Detect and Re-Align Mixed-up Samples for Integrative Studies of Multi-
 * GCTA
 
 ## Get started
-To run the sample ID realignment procedure:
+Users can use the following script to realign sample IDs, with the input of highly related data pairs, genetics-based and reported sexes, and omics priority. This script firstly estimate possible switch directions for each mismatched data pair based on a logistic regression model. Then, it connects all the highly related data pairs and produces multiple independent networks. A topological sorting algorithm is applied to identify the highest confidence IDs for data IDs in each network.
+
 ```bash
 python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=data/omics_priority --nsex=data/samplelist.reportedSex --gsex=data/samplelist.snpSex --output=data/res
 ```
@@ -114,4 +115,10 @@ The Cytoscape input file named "exampleID.highlyrelatedpairs.cytoscape.txt" has 
 
 Here is several examples of data relationships visualization:
 ![GitHub Logo](/images/SampleRelationExample.png)
+
+## Train logistic regression model
+We have trained the logistic regression model using our BrainGVEX data. The training results were used as default parameters. We also provide an function for users to train there model using other data if they have. The script was shown below:
+```bash
+python3 run_DRAMS.py --pair=training/trainingSet.highlyrelatedpairs --prior=training/trainingSet.omicsPriority --nsex=training/trainingSet.reportedSex --gsex=training/trainingSet.snpSex --train=training/trainingSet.highConfDirections --output=training/trainingSet
+```
 
