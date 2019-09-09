@@ -175,10 +175,14 @@ def format_pairs(d):
             continue
         if s1[0]==s2[0]:
             continue
-        k = "%s::%s"%(s1[0],s2[0])
-        if k not in dd:
-            dd[k] = []
-        dd[k].append([ s1[1], s2[1], d[p] ])
+        if s1[0]>s2[0]:
+            k = "%s::%s"%(s1[0],s2[0])
+            if k not in dd: dd[k] = []
+            dd[k].append([ s1[1], s2[1], d[p] ])
+        else:
+            k = "%s::%s"%(s2[0],s1[0])
+            if k not in dd: dd[k] = []
+            dd[k].append([ s2[1], s1[1], d[p] ])
     for k in dd:
         dd[k] = np.array(dd[k])
     return dd
