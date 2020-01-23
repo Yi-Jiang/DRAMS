@@ -14,7 +14,7 @@ A tool to Detect and Re-Align Mixed-up Samples for Integrative Studies of Multi-
 * GCTA
 
 ## Get started
-Users can use the following script to realign sample IDs, with the input of highly related data pairs, genetics-based and reported sexes, and omics priority. This script firstly estimate possible switch directions for each mismatched data pair based on a logistic regression model. Then, it connects all the highly related data pairs and produces multiple independent networks. A topological sorting algorithm is applied to identify the highest confidence IDs for data IDs in each network.
+Users can use the following script to realign sample IDs, with the input of highly related data pairs, genetics-based and reported sexes, and omics priority. This script firstly estimate possible switch directions for each mismatched data pair based on a logistic regression model. Then, it connects all the highly related data pairs and produces multiple independent networks. A topological sorting algorithm is applied to identify the highest confidence IDs for data IDs in each network. Users can use "--stringent" to run DRAMS in stringent mode. In the stringent mode, we discarded the data groups with less than three data or with no shared IDs (i.e. all data IDs in a group are different), as they are almost unlikely to be corrected.
 
 ```bash
 python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=data/omics_priority --nsex=data/samplelist.reportedSex --gsex=data/samplelist.snpSex --output=data/res
