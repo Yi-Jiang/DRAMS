@@ -19,16 +19,18 @@ def usage():
     print("  --coef=<STRING>     A list of coeffecients corresponding to \"intercept,a,b,c\" in Logistic Regression model. ")
     print("                        The values were separated by comma with no space. [0,24.14,0.89,3.39]")
     print("  --train=<STRING>    A list of data pairs with known switch directions being used as training set. If this parameter is specified, it will only train the logistic regression model.")
+    print("  --stringent         To realign data ID stringently. In this mode, the data groups with less than three IDs or with no shared ID will be discarded, as it's hard to determine the IDs for these situations..")
     print("  --output=<STRING>   Prefix of output files.")
     print("  -h/--help           Show this information.")
 
 ## Default options
 coef = [0,24.14,0.89,3.39]
 train = 0
+stringent = 0
 
 ## Deal with the options
 try:
-    opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "pair=", "prior=", "nsex=", "gsex=", "coef=", "train=", "output=", ] )
+    opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "pair=", "prior=", "nsex=", "gsex=", "coef=", "train=", "stringent", "output=", ] )
 except getopt.GetoptError:
     print("get option error!")
     usage()
@@ -51,6 +53,8 @@ for opt, val in opts:
             coef = list(map(float, val.replace(" ","").split(",")))
         if opt in ( "--train", ):
             train = val
+        if opt in ( "--stringent", ):
+            stringent = 1
         if opt in ( "--output", ):
             output = val
 
@@ -484,7 +488,10 @@ def sort_nodes():
     trueID[3] = []
     trueID[4] = []
     for m in idsInNet:
-        if len(set(idsInNet[m].values()))==1:  ## all samples matched in this sub network
+        nDifDataInGroup = len(set(idsInNet[m].values()))
+        nDataInGroup = len(idsInNet[m])
+        nOmicsInGroup = len(set(map(lambda x: x.split("|")[1],idsInNet[m].keys())))
+        if nDifDataInGroup==1 or (stringent==1 and (nDataInGroup<3 or nDifDataInGroup>=nOmicsInGroup)):  ## (left): all samples matched in this sub network. (right): Stringent mode
             for n in idsInNet[m]:
                 t,s = n.split("|")
                 if gsex[t][s]==0 or nsex[s]==0:

@@ -28,4 +28,4 @@ gcta64 --bfile data/genotypes.merge --autosome --maf 0.01 --make-grm --out data/
 python3 scripts/extract_highly_related_pairs.py --input_prefix=data/genotypes.merge --output_prefix=data/genotypes.merge --threshold=0.65 --plot
 
 ## Determine true IDs for each data.
-python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=data/omics_priority --nsex=data/samplelist.nominalSex --gsex=data/samplelist.snpSex --output=data/res
+python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=data/omics_priority --nsex=data/samplelist.reportedSex --gsex=data/samplelist.snpSex --output=data/res
