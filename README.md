@@ -2,10 +2,10 @@
 A tool to Detect and Re-Align Mixed-up Samples for Integrative Studies of Multi-omics Data.
 
 ## Highlights
-* Need at least three types of -omics data to run this tool.
+* Need at least three types of omics data to run this tool.
 * We used a logistic regression model followed by a modified topological sorting algorithm to correct sample mix-ups based on data relationships of multi-omics. User can also train there own logistic regression model.
 * Sex information is not necessary, but having both genetics-based and reported sexes will help identify true IDs.
-* Users can set -omics priority to indicate their confidence for the correctness of each -omics type.
+* Users can set omics priority to indicate their confidence for the correctness of each omics type.
 
 ## Software requirement
 * Linux operating system
@@ -29,7 +29,7 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 | omicsA | S2 | omicsB | S2 | 0.972 | Y |
 | omicsA | S3 | omicsC | S2 | 0.985 | N |
 
-2. **Omics type priority file** (Tab-separated). A numeric value ranging from 0 to 1 to indicate the user’s confidence for the correctness of each -omics type. The -omics types listed in one line separated by comma will be considered as one -omics type in the logistic regression.
+2. **Omics type priority file** (Tab-separated). An integer started from 1 in the second column to denote the user’s confidence for the correctness of each omics type (1 means the highest confidence). The omics types listed in one line separated by comma will be considered as one omics type in the logistic regression.
 
 | OmicsType | Priority |
 | ---------- | --------- |
@@ -92,7 +92,7 @@ plink --bfile exampleID --check-sex ycount 0.2 0.8 --out exampleID  # sexcheck (
 For RNA-Seq data, we recommend to infer genetics-based sexes according to XIST gene expression levels. In our study, we taked samples with XIST expression larger than 2 (TPM, Transcripts Per Kilobase Million) as females.
 
 ### Estimate genetic relatedness scores
-Genetic relatedness scores among data of different -omics types were estimated by GCTA.
+Genetic relatedness scores among data of different omics types were estimated by GCTA.
 Please be noted that sample ID should be formated like this: "OmicsType|SampleID".
 ```bash
 plink --bfile exampleID1 --merge-list mergelist.txt --make-bed --out exampleID.merge  # Merge input files, each file per line for the merge list.
@@ -100,13 +100,13 @@ gcta64 --bfile exampleID --autosome --maf 0.01 --make-grm --out exampleID  # Est
 ```
 
 ### Extract highly related data pairs
-Basically, the genetic relatedness scores were in bimodal distribution. The threshold to distinguish highly related data pairs from random pairs should be determined by eyeballing the distribution. Based on our BrainGVEX data, we set the threshold as 0.65 by default. We provided a script to extract highly related data pairs from GCTA results. The results include a table of all highly related sample pairs, histograms of the genetic relatedness scores, a Cytoscape input file for visualizing sample relationships, and a summary table for the highly related data pairs for each -omics type.
+Basically, the genetic relatedness scores were in bimodal distribution. The threshold to distinguish highly related data pairs from random pairs should be determined by eyeballing the distribution. Based on our BrainGVEX data, we set the threshold as 0.65 by default. We provided a script to extract highly related data pairs from GCTA results. The results include a table of all highly related sample pairs, histograms of the genetic relatedness scores, a Cytoscape input file for visualizing sample relationships, and a summary table for the highly related data pairs for each omics type.
 ```bash
 python3 scripts/extract_highly_related_pairs.py --input_prefix=exampleID --output_prefix=exampleID --threshold=0.65  --plot
 ```
 
 ## Guideline of visualizing data relationships using Cytoscape
-The Cytoscape input file named "exampleID.highlyrelatedpairs.cytoscape.txt" has been generated in previous step. Users can visualize the data relationships among all the -omics types using Cytoscape. Here is the steps in detail:
+The Cytoscape input file named "exampleID.highlyrelatedpairs.cytoscape.txt" has been generated in previous step. Users can visualize the data relationships among all the omics types using Cytoscape. Here is the steps in detail:
 1. Load the Cytoscape software (recommended version > 3.0).
 1. Click File -> Import -> Network -> File.
 1. Select the file "exampleID.highlyrelatedpairs.cytoscape.txt" in the file chooser dialog.
