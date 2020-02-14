@@ -13,9 +13,10 @@ def usage():
     print("  --pair=<STRING>     A file of highly related data pairs.")
     print("  --prior=<STRING>    A file of omics priority.")
     print("                        Col1: Omics type. Multiple omics types separated by comma will be considered as one type.")
-    print("                        Col2: Omics priority. Recommend to use proportion of sex-matched samples as priority (Range: 0~1).")
+    print("                        Col2: Omics priority. Recommend to use proportion of sex-matched samples as priority (Integer started from 1).")
     print("  --nsex=<STRING>     A file of sample list with reported sex.")
     print("  --gsex=<STRING>     A file of sample list with genetic inferred sex.")
+    print("  --cutoff=<STRING>   Relatedness score cutoff to extract highly related data pairs. [0.65]")
     print("  --coef=<STRING>     A list of coeffecients corresponding to \"intercept,a,b,c\" in Logistic Regression model. ")
     print("                        The values were separated by comma with no space. [0,24.14,0.89,3.39]")
     print("  --train=<STRING>    A list of data pairs with known switch directions being used as training set. If this parameter is specified, it will only train the logistic regression model.")
@@ -24,13 +25,14 @@ def usage():
     print("  -h/--help           Show this information.")
 
 ## Default options
+cutoff = 0.65
 coef = [0,24.14,0.89,3.39]
 train = 0
 stringent = 0
 
 ## Deal with the options
 try:
-    opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "pair=", "prior=", "nsex=", "gsex=", "coef=", "train=", "stringent", "output=", ] )
+    opts, args = getopt.getopt( sys.argv[1:], "h", ["help", "pair=", "prior=", "nsex=", "gsex=", "cutoff=", "coef=", "train=", "stringent", "output=", ] )
 except getopt.GetoptError:
     print("get option error!")
     usage()
@@ -49,6 +51,8 @@ for opt, val in opts:
             nsexFile = val
         if opt in ( "--gsex", ):
             gsexFile = val
+        if opt in ( "--cutoff", ):
+            cutoff = float(val)
         if opt in ( "--coef", ):
             coef = list(map(float, val.replace(" ","").split(",")))
         if opt in ( "--train", ):
@@ -215,9 +219,13 @@ def read_relate_pairs(infile):
         if not l:
             break
         s = l.rstrip("\n").split("\t")
-        t1,s1,t2,s2 = s[:4]
+        t1,s1,t2,s2,relatedness = s[:4]
         k1 = t1+"|"+s1
         k2 = t2+"|"+s2
+        
+        # Filter unrelated data pairs
+        if float(relatedness)<cutoff:
+            continue
         
         # Initialize indegree for each sample
         if k1 not in indegree: indegree[k1] = 0
