@@ -37,14 +37,14 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 | omicsB | 2 |
 | omicsC,omicsD | 3 |
 
-3. **Reported sex file** (Tab-separated).
+3. **Reported sex file** (Tab-separated). Use "-" to indicate unknown sex.
 
 | SampleID | ReportedSex |
 | ---------- | --------- |
 | S1 | M |
 | S2 | F |
 
-4. **Genetics-based sex file** (Tab-separated). Please see [document below](#Infer-genetics-based-sexes) for recommended guideline to estimate genetics-based sexes.
+4. **Genetics-based sex file** (Tab-separated). Please see [document below](#Infer-genetics-based-sexes) for recommended guideline to estimate genetics-based sexes. Use "-" to indicate unknown sex.
 
 | OmicsType | SampleID | GeneticSex |
 | --------- | -------- | ---------- |
