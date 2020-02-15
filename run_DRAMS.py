@@ -219,7 +219,7 @@ def read_relate_pairs(infile):
         if not l:
             break
         s = l.rstrip("\n").split("\t")
-        t1,s1,t2,s2,relatedness = s[:4]
+        t1,s1,t2,s2,relatedness = s[:5]
         k1 = t1+"|"+s1
         k2 = t2+"|"+s2
         
