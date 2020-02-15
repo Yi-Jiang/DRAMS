@@ -46,10 +46,10 @@ python3 run_DRAMS.py --pair=data/genotypes.merge.highlyrelatedpairs.txt --prior=
 
 4. **Genetics-based sex file** (Tab-separated). Please see [document below](#Infer-genetics-based-sexes) for recommended guideline to estimate genetics-based sexes.
 
-| SampleID | GeneticSex |
-| ---------- | --------- |
-| S1 | M |
-| S2 | F |
+| OmicsType | SampleID | GeneticSex |
+| --------- | -------- | ---------- |
+| omicsA | S1 | M |
+| omicsA | S2 | F |
 
 ## Output file
 For each data, DRAMS assign a new ID if the data has been detected as a mix-up. For the results, a table indicating the original and new sample ID for each data will be created. Here is the title and meaning of each column:
