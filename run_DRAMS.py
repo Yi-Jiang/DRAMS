@@ -281,8 +281,10 @@ def read_relate_pairs(infile):
     print("  Number of mismatched pairs: %s"%nMismatch)
     print()
 
-    ## For example: a sub network contains four nodes A, B, C, and D. If the first round read A & B, the second round read C & D, then they will be splited into two sub networks. We should merge then.
+    ## Merge networks
+    print("## Merging networks ... ")
     keydict = dict()
+    key_removed = []
     idsInNet2 = copy.deepcopy(idsInNet)
     for m in idsInNet2:
         for n in idsInNet2[m]:
@@ -290,12 +292,19 @@ def read_relate_pairs(infile):
                 keydict[n] = m
             else:
                 ## m and keydict[n] should be merged
-                #import pprint
-                #pprint.pprint(idsInNet[m])
-                #pprint.pprint(idsInNet[keydict[n]])
+                if keydict[n] in key_removed:
+                    continue
+                #print(m,keydict[n],n)
+                #print("idsInNet[m]",len(idsInNet[m]),list(idsInNet[m].items())[:5])
+                #print("idsInNet[keydict[n]]",len(idsInNet[keydict[n]]),list(idsInNet[keydict[n]].items())[:5])
                 for i in idsInNet[keydict[n]]:
                     idsInNet[m][i] = idsInNet[keydict[n]][i]
                 del idsInNet[keydict[n]]
+                key_removed.append(keydict[n])
+    print("  Number of networks: %s"%len(idsInNet2))
+    print("  Number of networks removed: %s"%len(key_removed))
+    print("  Number of networks after merging: %s"%len(idsInNet))
+    print()
 
 def cal_numOmics(xt,x):
     """
